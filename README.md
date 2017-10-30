@@ -1,12 +1,16 @@
 ## Typed-Signals
 
-[![Build Status](https://travis-ci.org/Lusito/typed-signals.svg?branch=master)](https://travis-ci.org/Lusito/typed-signals)
+[![Build Status](https://travis-ci.org/Lusito/typed-signals.svg?branch=develop)](https://travis-ci.org/Lusito/typed-signals)
 
-A type-checked signal library written in TypeScript, usable from plain Javascript as well. This is a TypeScript port of this excellent C++11 Version:
+A type-checked signal library written in TypeScript, usable from plain JavaScript as well. This is a TypeScript port of this excellent C++11 version:
 [Performance of a C++11 Signal System](https://testbit.eu/cpp11-signal-system-performance/).
 Of course, some changes have been made to make it work with TypeScript.
 
 The original unit tests and additional ones are running automatically on [Travis-CI](https://travis-ci.org/)
+
+### Installation via NPM
+
+```npm install typed-signals --save```
 
 ### Simple usage
 
@@ -59,6 +63,7 @@ import { Signal } from "typed-signals";
 
 let mySignal = new Signal<() => void>();
 
+// Handlers are called in the order in which they are added:
 mySignal.connect(()=>console.log('first'));
 mySignal.connect(()=>console.log('second'));
 mySignal.disconnectAll();
