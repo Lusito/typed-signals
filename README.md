@@ -1,6 +1,7 @@
 ## Typed-Signals
 
 [![Build Status](https://travis-ci.org/Lusito/typed-signals.svg?branch=develop)](https://travis-ci.org/Lusito/typed-signals)
+[![Code Coverage](https://coveralls.io/repos/github/Lusito/typed-signals/badge.svg?branch=develop)](https://coveralls.io/github/Lusito/typed-signals)
 
 A type-checked signal library written in TypeScript, usable from plain JavaScript as well. This is a TypeScript port of this excellent C++11 version:
 [Performance of a C++11 Signal System](https://testbit.eu/cpp11-signal-system-performance/).

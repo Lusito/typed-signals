@@ -29,7 +29,8 @@
   "types": "src/Signal.ts",
   "scripts": {
     "pretest": "tsc",
-    "test": "nyc mocha --require source-map-support/register \"./dist/test/**/*.js\""
+    "test": "nyc mocha --require source-map-support/register \"./dist/test/**/*.js\"",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "nyc": {
     "extension": [
@@ -53,6 +54,7 @@
     "@types/node": "^8.0.46",
     "awesome-typescript-loader": "^3.2.3",
     "chai": "^4.1.2",
+    "coveralls": "^3.0.0",
     "mocha": "^4.0.1",
     "mocha-typescript": "^1.1.11",
     "nyc": "^11.2.1",
