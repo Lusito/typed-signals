@@ -94,7 +94,7 @@ class TestCollector {
 			}
 		}
 	}
-	
+
 	@test disabled_connections() {
 		let dummy = new Dummy();
 		let signal = new Signal<(e: Dummy) => void>();
@@ -114,7 +114,7 @@ class TestCollector {
 		signal.emit(dummy);
 		assert.strictEqual(listener1.count, 1);
 		assert.strictEqual(listener2.count, 2);
-		
+
 		con1.enabled = true;
 		assert.isTrue(con1.enabled);
 		signal.emit(dummy);
@@ -207,8 +207,8 @@ class TestCollector {
 		let sig = new Signal<() => void>();
 		let count1 = 0;
 		let count2 = 0;
-		sig.connect(()=> count1++);
-		sig.connect(()=> count2++);
+		sig.connect(() => count1++);
+		sig.connect(() => count2++);
 		sig.emit();
 		assert.strictEqual(1, count1);
 		assert.strictEqual(1, count2);
@@ -276,7 +276,7 @@ class TestCollector {
 	}
 
 	@test basic_signal_test() {
-		let result:string[] = [];
+		let result: string[] = [];
 		let sig1 = new Signal<(result: string[], f: number, i: number, s: string) => void>();
 		let id1 = sig1.connect(float_callback);
 		let id2 = sig1.connect((r, f, i, s) => { result.push(`int: ${i}\n`); });
@@ -310,33 +310,33 @@ class TestCollector {
 			"DONE";
 		assert.strictEqual(result.join(''), expected);
 	}
-	
+
 	@test disable_disconnected() {
 		let sig = new Signal<() => void>();
-		let connection = sig.connect(()=>{});
+		let connection = sig.connect(() => { });
 		connection.disconnect();
-		assert.doesNotThrow(()=> connection.enabled = false);
+		assert.doesNotThrow(() => connection.enabled = false);
 	}
 
 	@test collector_last() {
 		let sig = new Signal<() => number>();
-		sig.connect(()=>0);
-		sig.connect(()=>1);
-		sig.connect(()=>2);
-		sig.connect(()=>3);
-		sig.connect(()=>4);
-		sig.connect(()=>5);
+		sig.connect(() => 0);
+		sig.connect(() => 1);
+		sig.connect(() => 2);
+		sig.connect(() => 3);
+		sig.connect(() => 4);
+		sig.connect(() => 5);
 		let collector = new CollectorLast<() => number, number>(sig);
 		collector.emit();
 		assert.strictEqual(5, collector.getResult());
 		collector.reset();
 		assert.isUndefined(collector.getResult());
 	}
-	
+
 	@test collector_disabled() {
 		let sig = new Signal<() => number>();
-		sig.connect(()=>23);
-		let connection = sig.connect(()=>42);
+		sig.connect(() => 23);
+		let connection = sig.connect(() => 42);
 		let collector = new CollectorLast<() => number, number>(sig);
 		collector.emit();
 		assert.strictEqual(42, collector.getResult());
@@ -380,7 +380,7 @@ class TestCollector {
 		collector.reset();
 		assert.isFalse(collector.getResult());
 	}
-	
+
 	@test collector_array() {
 		let sig_array = new Signal<() => number>();
 		sig_array.connect(TestCollectorArray.handler777);
