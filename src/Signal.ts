@@ -207,7 +207,7 @@ export class Signal<CB extends Function> {
 /**
  * Base class for collectors.
  */
-export class Collector<CB extends Function, RT> {
+export abstract class Collector<CB extends Function, RT> {
     /**
      * Publish the bound signal event (call all handlers) to start the collection process.
      * 
@@ -230,9 +230,7 @@ export class Collector<CB extends Function, RT> {
      * 
      * @param result true to continue processing handlers.
      */
-    public handleResult(result: RT): boolean {
-        return true;
-    }
+    public abstract handleResult(result: RT): boolean;
 }
 
 /**

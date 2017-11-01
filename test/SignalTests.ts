@@ -2,7 +2,7 @@
 
 import { suite, test } from "mocha-typescript";
 import { assert } from "chai";
-import { Signal, SignalConnections, CollectorArray, CollectorUntil0, CollectorWhile0 } from "../src/Signal";
+import { Signal, SignalConnections, CollectorLast, CollectorUntil0, CollectorWhile0, CollectorArray } from "../src/Signal";
 
 class Dummy {
 }
@@ -203,6 +203,21 @@ class TestCollector {
 		assert.strictEqual(1, listenerB.count);
 	}
 
+	@test disconnect_all() {
+		let sig = new Signal<() => void>();
+		let count1 = 0;
+		let count2 = 0;
+		sig.connect(()=> count1++);
+		sig.connect(()=> count2++);
+		sig.emit();
+		assert.strictEqual(1, count1);
+		assert.strictEqual(1, count2);
+		sig.disconnectAll();
+		sig.emit();
+		assert.strictEqual(1, count1);
+		assert.strictEqual(1, count2);
+	}
+
 	@test signal_connections() {
 		let dummy = new Dummy();
 		let signal = new Signal<(e: Dummy) => void>();
@@ -296,17 +311,17 @@ class TestCollector {
 		assert.strictEqual(result.join(''), expected);
 	}
 
-	@test collector_array() {
-		let sig_array = new Signal<() => number>();
-		sig_array.connect(TestCollectorArray.handler777);
-		sig_array.connect(TestCollectorArray.handler42);
-		sig_array.connect(TestCollectorArray.handler1);
-		sig_array.connect(TestCollectorArray.handler42);
-		sig_array.connect(TestCollectorArray.handler777);
-		let collector = new CollectorArray<() => number, number>(sig_array);
+	@test collector_last() {
+		let sig = new Signal<() => number>();
+		sig.connect(()=>0);
+		sig.connect(()=>1);
+		sig.connect(()=>2);
+		sig.connect(()=>3);
+		sig.connect(()=>4);
+		sig.connect(()=>5);
+		let collector = new CollectorLast<() => number, number>(sig);
 		collector.emit();
-		let result = collector.getResult();
-		assert.sameOrderedMembers(result, [777, 42, 1, 42, 777]);
+		assert.strictEqual(5, collector.getResult());
 	}
 
 	@test collector_until_0() {
@@ -337,5 +352,18 @@ class TestCollector {
 		assert.isTrue(collector.getResult());
 		assert.isTrue(self.check1);
 		assert.isTrue(self.check2);
+	}
+	
+	@test collector_array() {
+		let sig_array = new Signal<() => number>();
+		sig_array.connect(TestCollectorArray.handler777);
+		sig_array.connect(TestCollectorArray.handler42);
+		sig_array.connect(TestCollectorArray.handler1);
+		sig_array.connect(TestCollectorArray.handler42);
+		sig_array.connect(TestCollectorArray.handler777);
+		let collector = new CollectorArray<() => number, number>(sig_array);
+		collector.emit();
+		let result = collector.getResult();
+		assert.sameOrderedMembers(result, [777, 42, 1, 42, 777]);
 	}
 }
