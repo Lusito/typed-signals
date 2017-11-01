@@ -1,6 +1,6 @@
 {
   "name": "typed-signals",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A type checked signal library for TypeScript (and JavaScript)",
   "keywords": [
     "TypeScript",
@@ -29,7 +29,24 @@
   "types": "src/Signal.ts",
   "scripts": {
     "pretest": "tsc",
-    "test": "mocha --require source-map-support/register \"./dist/test/**/*.js\""
+    "test": "nyc mocha --require source-map-support/register \"./dist/test/**/*.js\"",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "coverage/**/*",
+      "test/**/*",
+      "dist/test/**/*",
+      "**/*.d.ts"
+    ],
+    "reporter": [
+      "lcov"
+    ],
+    "all": true
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
@@ -37,8 +54,10 @@
     "@types/node": "^8.0.46",
     "awesome-typescript-loader": "^3.2.3",
     "chai": "^4.1.2",
+    "coveralls": "^3.0.0",
     "mocha": "^4.0.1",
     "mocha-typescript": "^1.1.11",
+    "nyc": "^11.2.1",
     "source-map-loader": "^0.2.2",
     "source-map-support": "^0.5.0",
     "typescript": "^2.5.3"

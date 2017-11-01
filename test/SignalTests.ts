@@ -2,7 +2,7 @@
 
 import { suite, test } from "mocha-typescript";
 import { assert } from "chai";
-import { Signal, SignalConnections, CollectorArray, CollectorUntil0, CollectorWhile0 } from "../src/Signal";
+import { Signal, SignalConnections, CollectorLast, CollectorUntil0, CollectorWhile0, CollectorArray } from "../src/Signal";
 
 class Dummy {
 }
@@ -94,7 +94,7 @@ class TestCollector {
 			}
 		}
 	}
-	
+
 	@test disabled_connections() {
 		let dummy = new Dummy();
 		let signal = new Signal<(e: Dummy) => void>();
@@ -114,7 +114,7 @@ class TestCollector {
 		signal.emit(dummy);
 		assert.strictEqual(listener1.count, 1);
 		assert.strictEqual(listener2.count, 2);
-		
+
 		con1.enabled = true;
 		assert.isTrue(con1.enabled);
 		signal.emit(dummy);
@@ -203,6 +203,21 @@ class TestCollector {
 		assert.strictEqual(1, listenerB.count);
 	}
 
+	@test disconnect_all() {
+		let sig = new Signal<() => void>();
+		let count1 = 0;
+		let count2 = 0;
+		sig.connect(() => count1++);
+		sig.connect(() => count2++);
+		sig.emit();
+		assert.strictEqual(1, count1);
+		assert.strictEqual(1, count2);
+		sig.disconnectAll();
+		sig.emit();
+		assert.strictEqual(1, count1);
+		assert.strictEqual(1, count2);
+	}
+
 	@test signal_connections() {
 		let dummy = new Dummy();
 		let signal = new Signal<(e: Dummy) => void>();
@@ -261,7 +276,7 @@ class TestCollector {
 	}
 
 	@test basic_signal_test() {
-		let result:string[] = [];
+		let result: string[] = [];
 		let sig1 = new Signal<(result: string[], f: number, i: number, s: string) => void>();
 		let id1 = sig1.connect(float_callback);
 		let id2 = sig1.connect((r, f, i, s) => { result.push(`int: ${i}\n`); });
@@ -296,17 +311,40 @@ class TestCollector {
 		assert.strictEqual(result.join(''), expected);
 	}
 
-	@test collector_array() {
-		let sig_array = new Signal<() => number>();
-		sig_array.connect(TestCollectorArray.handler777);
-		sig_array.connect(TestCollectorArray.handler42);
-		sig_array.connect(TestCollectorArray.handler1);
-		sig_array.connect(TestCollectorArray.handler42);
-		sig_array.connect(TestCollectorArray.handler777);
-		let collector = new CollectorArray<() => number, number>(sig_array);
+	@test disable_disconnected() {
+		let sig = new Signal<() => void>();
+		let connection = sig.connect(() => { });
+		connection.disconnect();
+		assert.doesNotThrow(() => connection.enabled = false);
+	}
+
+	@test collector_last() {
+		let sig = new Signal<() => number>();
+		sig.connect(() => 0);
+		sig.connect(() => 1);
+		sig.connect(() => 2);
+		sig.connect(() => 3);
+		sig.connect(() => 4);
+		sig.connect(() => 5);
+		let collector = new CollectorLast<() => number, number>(sig);
 		collector.emit();
-		let result = collector.getResult();
-		assert.sameOrderedMembers(result, [777, 42, 1, 42, 777]);
+		assert.strictEqual(5, collector.getResult());
+		collector.reset();
+		assert.isUndefined(collector.getResult());
+	}
+
+	@test collector_disabled() {
+		let sig = new Signal<() => number>();
+		sig.connect(() => 23);
+		let connection = sig.connect(() => 42);
+		let collector = new CollectorLast<() => number, number>(sig);
+		collector.emit();
+		assert.strictEqual(42, collector.getResult());
+		collector.reset();
+		assert.isUndefined(collector.getResult());
+		connection.enabled = false;
+		collector.emit();
+		assert.strictEqual(23, collector.getResult());
 	}
 
 	@test collector_until_0() {
@@ -322,6 +360,8 @@ class TestCollector {
 		assert.isFalse(collector.getResult());
 		assert.isTrue(self.check1);
 		assert.isTrue(self.check2);
+		collector.reset();
+		assert.isFalse(collector.getResult());
 	}
 
 	@test collector_while_0() {
@@ -337,5 +377,22 @@ class TestCollector {
 		assert.isTrue(collector.getResult());
 		assert.isTrue(self.check1);
 		assert.isTrue(self.check2);
+		collector.reset();
+		assert.isFalse(collector.getResult());
+	}
+
+	@test collector_array() {
+		let sig_array = new Signal<() => number>();
+		sig_array.connect(TestCollectorArray.handler777);
+		sig_array.connect(TestCollectorArray.handler42);
+		sig_array.connect(TestCollectorArray.handler1);
+		sig_array.connect(TestCollectorArray.handler42);
+		sig_array.connect(TestCollectorArray.handler777);
+		let collector = new CollectorArray<() => number, number>(sig_array);
+		collector.emit();
+		let result = collector.getResult();
+		assert.sameOrderedMembers(result, [777, 42, 1, 42, 777]);
+		collector.reset();
+		assert.isEmpty(collector.getResult());
 	}
 }

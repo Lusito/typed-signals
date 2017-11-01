@@ -27,12 +27,8 @@ class SignalLink {
 
     public unlink(): void {
         this.callback = null;
-
-        if (this.next)
-            this.next.prev = this.prev;
-
-        if (this.prev)
-            this.prev.next = this.next;
+        this.next.prev = this.prev;
+        this.prev.next = this.next;
     }
 
     public insert(callback: Function, order: number): SignalLink {
@@ -162,10 +158,8 @@ export class Signal<CB extends Function> {
      * Disconnect all handlers from this signal event.
      */
     public disconnectAll() {
-        if (this.head) {
-            while (this.head.next !== this.head) {
-                this.head.next.unlink();
-            }
+        while (this.head.next !== this.head) {
+            this.head.next.unlink();
         }
     }
 
@@ -207,7 +201,7 @@ export class Signal<CB extends Function> {
 /**
  * Base class for collectors.
  */
-export class Collector<CB extends Function, RT> {
+export abstract class Collector<CB extends Function, RT> {
     /**
      * Publish the bound signal event (call all handlers) to start the collection process.
      * 
@@ -230,9 +224,7 @@ export class Collector<CB extends Function, RT> {
      * 
      * @param result true to continue processing handlers.
      */
-    public handleResult(result: RT): boolean {
-        return true;
-    }
+    public abstract handleResult(result: RT): boolean;
 }
 
 /**
@@ -251,6 +243,13 @@ export class CollectorLast<CB extends Function, RT> extends Collector<CB, RT> {
      */
     public getResult(): RT | undefined {
         return this.result;
+    }
+
+    /**
+     * Reset the result
+     */
+    public reset(): void {
+        delete this.result;
     }
 }
 
@@ -271,6 +270,13 @@ export class CollectorUntil0<CB extends Function> extends Collector<CB, boolean>
     public getResult(): boolean {
         return this.result;
     }
+
+    /**
+     * Reset the result
+     */
+    public reset(): void {
+        this.result = false;
+    }
 }
 
 /**
@@ -290,6 +296,13 @@ export class CollectorWhile0<CB extends Function> extends Collector<CB, boolean>
     public getResult(): boolean {
         return this.result;
     }
+
+    /**
+     * Reset the result
+     */
+    public reset(): void {
+        this.result = false;
+    }
 }
 
 /**
@@ -308,5 +321,12 @@ export class CollectorArray<CB extends Function, RT> extends Collector<CB, RT> {
      */
     public getResult(): RT[] {
         return this.result;
+    }
+
+    /**
+     * Reset the result
+     */
+    public reset(): void {
+        this.result.length = 0;
     }
 }

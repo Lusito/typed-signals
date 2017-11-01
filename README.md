@@ -1,12 +1,24 @@
 ## Typed-Signals
 
 [![Build Status](https://travis-ci.org/Lusito/typed-signals.svg?branch=master)](https://travis-ci.org/Lusito/typed-signals)
+[![Code Coverage](https://coveralls.io/repos/github/Lusito/typed-signals/badge.svg?branch=master)](https://coveralls.io/github/Lusito/typed-signals)
 
-A type-checked signal library written in TypeScript, usable from plain JavaScript as well. This is a TypeScript port of this excellent C++11 version:
+A type-checked [signal](https://en.wikipedia.org/wiki/Signals_and_slots) library written in TypeScript, usable from plain JavaScript as well. This is a TypeScript port of this excellent C++11 version:
 [Performance of a C++11 Signal System](https://testbit.eu/cpp11-signal-system-performance/).
 Of course, some changes have been made to make it work with TypeScript.
 
-The original unit tests and additional ones are running automatically on [Travis-CI](https://travis-ci.org/)
+The original unit tests and additional ones are running automatically on 
+
+### Why Typed-Signals?
+
+- Arbitrary arguments lists
+- Type checking
+- Support for priorities
+- Add and remove listeners anytime, even during callbacks
+- Signals can have return values, which can be collected
+- No dependencies
+- Automated [unit tests](https://travis-ci.org/Lusito/typed-signals)  with 100% [code coverage](https://coveralls.io/github/Lusito/typed-signals).
+- Liberal license: [CC0 Public Domain](http://creativecommons.org/publicdomain/zero/1.0/)
 
 ### Installation via NPM
 
