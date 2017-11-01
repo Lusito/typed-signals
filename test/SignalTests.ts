@@ -310,6 +310,13 @@ class TestCollector {
 			"DONE";
 		assert.strictEqual(result.join(''), expected);
 	}
+	
+	@test disable_disconnected() {
+		let sig = new Signal<() => void>();
+		let connection = sig.connect(()=>{});
+		connection.disconnect();
+		assert.doesNotThrow(()=> connection.enabled = false);
+	}
 
 	@test collector_last() {
 		let sig = new Signal<() => number>();
@@ -322,6 +329,22 @@ class TestCollector {
 		let collector = new CollectorLast<() => number, number>(sig);
 		collector.emit();
 		assert.strictEqual(5, collector.getResult());
+		collector.reset();
+		assert.isUndefined(collector.getResult());
+	}
+	
+	@test collector_disabled() {
+		let sig = new Signal<() => number>();
+		sig.connect(()=>23);
+		let connection = sig.connect(()=>42);
+		let collector = new CollectorLast<() => number, number>(sig);
+		collector.emit();
+		assert.strictEqual(42, collector.getResult());
+		collector.reset();
+		assert.isUndefined(collector.getResult());
+		connection.enabled = false;
+		collector.emit();
+		assert.strictEqual(23, collector.getResult());
 	}
 
 	@test collector_until_0() {
@@ -337,6 +360,8 @@ class TestCollector {
 		assert.isFalse(collector.getResult());
 		assert.isTrue(self.check1);
 		assert.isTrue(self.check2);
+		collector.reset();
+		assert.isFalse(collector.getResult());
 	}
 
 	@test collector_while_0() {
@@ -352,6 +377,8 @@ class TestCollector {
 		assert.isTrue(collector.getResult());
 		assert.isTrue(self.check1);
 		assert.isTrue(self.check2);
+		collector.reset();
+		assert.isFalse(collector.getResult());
 	}
 	
 	@test collector_array() {
@@ -365,5 +392,7 @@ class TestCollector {
 		collector.emit();
 		let result = collector.getResult();
 		assert.sameOrderedMembers(result, [777, 42, 1, 42, 777]);
+		collector.reset();
+		assert.isEmpty(collector.getResult());
 	}
 }
