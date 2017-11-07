@@ -30,7 +30,8 @@
   "scripts": {
     "pretest": "tsc",
     "test": "nyc mocha --require source-map-support/register \"./dist/test/**/*.js\"",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "doc": "typedoc --out docs src"
   },
   "nyc": {
     "extension": [
