@@ -119,7 +119,7 @@ export class SignalConnections {
 /**
  * A signal is a way to publish and subscribe to events.
  * 
- * @param CB The function signature to be implemented by handlers.
+ * @typeparam CB The function signature to be implemented by handlers.
  */
 export class Signal<CB extends Function> {
     /**
@@ -200,6 +200,9 @@ export class Signal<CB extends Function> {
 
 /**
  * Base class for collectors.
+ * 
+ * @typeparam CB The function signature to be implemented by handlers.
+ * @typeparam RT The return type of CB
  */
 export abstract class Collector<CB extends Function, RT> {
     /**
@@ -229,6 +232,9 @@ export abstract class Collector<CB extends Function, RT> {
 
 /**
  * Returns the result of the last signal handler from a signal emission.
+ * 
+ * @typeparam CB The function signature to be implemented by handlers.
+ * @typeparam RT The return type of CB
  */
 export class CollectorLast<CB extends Function, RT> extends Collector<CB, RT> {
     private result: RT | undefined;
@@ -255,6 +261,9 @@ export class CollectorLast<CB extends Function, RT> extends Collector<CB, RT> {
 
 /**
  * Keep signal emissions going while all handlers return true.
+ * 
+ * @typeparam CB The function signature to be implemented by handlers.
+ * Return type of CB must be boolean.
  */
 export class CollectorUntil0<CB extends Function> extends Collector<CB, boolean> {
     private result: boolean = false;
@@ -281,6 +290,9 @@ export class CollectorUntil0<CB extends Function> extends Collector<CB, boolean>
 
 /**
  * Keep signal emissions going while all handlers return false.
+ * 
+ * @typeparam CB The function signature to be implemented by handlers.
+ * Return type of CB must be boolean.
  */
 export class CollectorWhile0<CB extends Function> extends Collector<CB, boolean> {
     private result: boolean = false;
@@ -307,6 +319,9 @@ export class CollectorWhile0<CB extends Function> extends Collector<CB, boolean>
 
 /**
  * Returns the result of the all signal handlers from a signal emission in an array.
+ * 
+ * @typeparam CB The function signature to be implemented by handlers.
+ * @typeparam RT The return type of CB
  */
 export class CollectorArray<CB extends Function, RT> extends Collector<CB, RT> {
     private result: RT[] = [];
