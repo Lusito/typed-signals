@@ -22,7 +22,7 @@ The original unit tests and additional ones are running automatically on
 - No dependencies
 - Automated [unit tests](https://travis-ci.org/Lusito/typed-signals)  with 100% [code coverage](https://coveralls.io/github/Lusito/typed-signals)
 - Liberal license: [CC0 Public Domain](http://creativecommons.org/publicdomain/zero/1.0/)
-- [Fully documented](https://lusito.github.io/typed-ecstasy/index.html) using TypeDoc
+- [Fully documented](https://lusito.github.io/typed-signals/index.html) using TypeDoc
 
 ### Installation via NPM
 
