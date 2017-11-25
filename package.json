@@ -1,6 +1,6 @@
 {
   "name": "typed-signals",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A type checked signal library for TypeScript (and JavaScript)",
   "keywords": [
     "TypeScript",
@@ -10,7 +10,7 @@
     "Subscribe"
   ],
   "author": "Santo Pfingsten",
-  "license": "CC0 Public Domain",
+  "license": "CC0-1.0",
   "homepage": "https://github.com/Lusito/typed-signals",
   "bugs": {
     "url": "https://github.com/Lusito/typed-signals/issues"
@@ -30,7 +30,8 @@
   "scripts": {
     "pretest": "tsc",
     "test": "nyc mocha --require source-map-support/register \"./dist/test/**/*.js\"",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "doc": "typedoc --out docs --excludeNotExported src"
   },
   "nyc": {
     "extension": [
