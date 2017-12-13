@@ -136,7 +136,7 @@ export class Signal<CB extends Function> {
      * Create a new signal.
      */
     public constructor() {
-        (this.emit as any) = this.emitInternal.bind(this);
+        (this as any).emit = this.emitInternal.bind(this);
     }
 
     /**
@@ -219,7 +219,7 @@ export abstract class Collector<CB extends Function, RT> {
      */
     public constructor(signal: Signal<CB>) {
         let self = this;
-        (this.emit as any) = function () { (signal as any).emitCollecting(self, arguments); };
+        (this as any).emit = function () { (signal as any).emitCollecting(self, arguments); };
     }
 
     /**
