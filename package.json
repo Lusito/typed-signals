@@ -26,7 +26,7 @@
     "tsconfig.json"
   ],
   "main": "dist/src/Signal.js",
-  "types": "src/Signal.ts",
+  "types": "dist/src/Signal.d.ts",
   "scripts": {
     "pretest": "tsc",
     "test": "nyc mocha --require source-map-support/register \"./dist/test/**/*.js\"",
