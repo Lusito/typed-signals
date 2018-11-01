@@ -41,6 +41,7 @@
       "coverage/**/*",
       "test/**/*",
       "dist/test/**/*",
+      "docs/**/*",
       "**/*.d.ts"
     ],
     "reporter": [
