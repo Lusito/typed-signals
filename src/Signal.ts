@@ -51,12 +51,27 @@ class SignalLink {
 /**
  * Represents a connection of a callback to a signal.
  */
-export class SignalConnection {
+export interface SignalConnection {
+    /**
+     * Stop this connection from receiving further events permanently.
+     * 
+     * @returns false if the connection has already been severed.
+     */
+    disconnect(): boolean;
+
+    /**
+     * If set to false it prevents the handler from receiving the signals events.
+     */
+    enabled: boolean;
+}
+
+/**
+ * Implementation of SignalConnection, for internal use only.
+ */
+class SignalConnectionImpl implements SignalConnection {
     private link: SignalLink | null;
 
     /**
-     * Do not use manually. For internal use only.
-     * 
      * @param head The head link of the signal.
      * @param link The actual link of the connection.
      */
@@ -64,11 +79,6 @@ export class SignalConnection {
         this.link = link;
     }
 
-    /**
-     * Stop this connection from receiving further events permanently.
-     * 
-     * @returns false if the connection has already been severed.
-     */
     public disconnect(): boolean {
         if (this.link !== null) {
             this.link.unlink();
@@ -79,9 +89,6 @@ export class SignalConnection {
         return false;
     }
 
-    /**
-     * If set to false it prevents the handler from receiving the signals events.
-     */
     public set enabled(enable: boolean) {
         if (this.link)
             this.link.setEnabled(enable);
@@ -151,7 +158,7 @@ export class Signal<CB extends Function> {
             this.hasNewLinks = true;
             link.newLink = true;
         }
-        return new SignalConnection(this.head, link);
+        return new SignalConnectionImpl(this.head, link);
     }
 
     /**
