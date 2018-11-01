@@ -225,7 +225,8 @@ export abstract class Collector<CB extends Function, RT> {
      * @param signal The signal to emit.
      */
     public constructor(signal: Signal<CB>) {
-        this.emit = ((...args: any[]) => (signal as any).emitCollecting(this, args)) as any;
+        const self = this;
+        this.emit = function () { (signal as any).emitCollecting(self, arguments) } as any;
     }
 
     /**
