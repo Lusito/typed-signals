@@ -39,7 +39,7 @@ class SignalLink {
             after = after.prev;
         }
 
-        let link = new SignalLink(after, after.next, order);
+        const link = new SignalLink(after, after.next, order);
         link.callback = callback;
         after.next = link;
         link.next.prev = link;
@@ -116,7 +116,7 @@ export class SignalConnections {
      * Disconnect all connections in the list and empty the list.
      */
     public disconnectAll() {
-        for (let connection of this.list) {
+        for (const connection of this.list) {
             connection.disconnect();
         }
         this.list = [];
@@ -153,7 +153,7 @@ export class Signal<CB extends Function> {
      * @param order Handlers with a higher order value will be called later.
      */
     public connect(callback: CB, order: number = 0): SignalConnection {
-        let link = this.head.insert(callback, order);
+        const link = this.head.insert(callback, order);
         if (this.emitDepth > 0) {
             this.hasNewLinks = true;
             link.newLink = true;
@@ -187,7 +187,7 @@ export class Signal<CB extends Function> {
 
         for (let link = this.head.next; link !== this.head; link = link.next) {
             if (link.isEnabled() && link.callback) {
-                let result = link.callback.apply(null, args);
+                const result = link.callback.apply(null, args);
                 if (!collector.handleResult(result))
                     break;
             }
@@ -225,8 +225,7 @@ export abstract class Collector<CB extends Function, RT> {
      * @param signal The signal to emit.
      */
     public constructor(signal: Signal<CB>) {
-        let self = this;
-        this.emit = function () { (signal as any).emitCollecting(self, arguments); } as any;
+        this.emit = ((...args: any) => (signal as any).emitCollecting(this, args)) as any;
     }
 
     /**
