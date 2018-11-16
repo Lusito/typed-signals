@@ -124,8 +124,9 @@ describe("Signal", () => {
     it("should be possible to disable disconnected listeners", () => {
         const sig = new Signal<() => void>();
         const connection = sig.connect(() => { });
-        connection.disconnect();
+        assert.isTrue(connection.disconnect());
         assert.doesNotThrow(() => connection.enabled = false);
+        assert.isFalse(connection.disconnect());
     });
 
     it("should not call disconnected listeners on emit", () => {
@@ -149,7 +150,7 @@ describe("Signal", () => {
             assert.strictEqual((i + 1), listenerB.count);
         }
 
-        refB.disconnect();
+        assert.isTrue(refB.disconnect());
 
         for (let i = 0; i < numDispatchs; ++i) {
             assert.strictEqual((i + numDispatchs), listenerA.count);
@@ -183,7 +184,7 @@ describe("Signal", () => {
         assert.strictEqual(1, count);
         assert.strictEqual(1, listenerB.count);
         assert.strictEqual(0, countB);
-        ref.disconnect();
+        assert.isTrue(ref.disconnect());
         signal.emit(dummy);
         assert.strictEqual(1, count);
         assert.strictEqual(2, listenerB.count);
@@ -199,7 +200,7 @@ describe("Signal", () => {
 
         const ref = signal.connect(() => {
             ++count;
-            ref.disconnect();
+            assert.isTrue(ref.disconnect());
         });
         signal.connect(listenerB.callback.bind(listenerB));
 
@@ -235,10 +236,12 @@ describe("Signal", () => {
         sig.emit();
         assert.strictEqual(1, count1);
         assert.strictEqual(1, count2);
-        sig.disconnect(cb1);
+        assert.isTrue(sig.disconnect(cb1));
         sig.emit();
         assert.strictEqual(1, count1);
         assert.strictEqual(2, count2);
+
+        assert.isFalse(sig.disconnect(cb1));
     });
 
     it("should pass parameters to listeners", () => {
