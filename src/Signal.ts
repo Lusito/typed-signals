@@ -93,6 +93,7 @@ class SignalConnectionImpl implements SignalConnection {
         if (this.link)
             this.link.setEnabled(enable);
     }
+
     public get enabled(): boolean {
         return this.link !== null && this.link.isEnabled();
     }
@@ -159,6 +160,22 @@ export class Signal<CB extends Function> {
             link.newLink = true;
         }
         return new SignalConnectionImpl(this.head, link);
+    }
+
+    /**
+     * Unsubscribe from this signal with the original callback instance.
+     * While you can use this method, the SignalConnection returned by connect() will not be updated!
+     * 
+     * @param callback The callback you passed to connect().
+     */
+    public disconnect(callback: CB) {
+        for (let link = this.head.next; link !== this.head; link = link.next) {
+            if (link.callback === callback) {
+                link.unlink();
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
