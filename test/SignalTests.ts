@@ -224,6 +224,23 @@ describe("Signal", () => {
         assert.strictEqual(1, count2);
     });
 
+    it("should allow disconnecting one listener", () => {
+        const sig = new Signal<() => void>();
+        let count1 = 0;
+        let count2 = 0;
+        const cb1 = () => count1++;
+        const cb2 = () => count2++;
+        sig.connect(cb1);
+        sig.connect(cb2);
+        sig.emit();
+        assert.strictEqual(1, count1);
+        assert.strictEqual(1, count2);
+        sig.disconnect(cb1);
+        sig.emit();
+        assert.strictEqual(1, count1);
+        assert.strictEqual(2, count2);
+    });
+
     it("should pass parameters to listeners", () => {
         const result: string[] = [];
         const sig1 = new Signal<(result: string[], f: number, i: number, s: string) => void>();
