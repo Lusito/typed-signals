@@ -63,7 +63,11 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<p><img src="https://lusito.github.io/typed-signals/typed_signals.png" alt=""></p>
-				<p><a href="http://creativecommons.org/publicdomain/zero/1.0/"><img src="https://img.shields.io/badge/License-CC0%20Public%20Domain-blue.svg" alt="License"></a></p>
+				<p><a href="https://www.npmjs.com/package/typed-signals"><img src="https://badgen.net/bundlephobia/minzip/typed-signals" alt="Minified + gzipped size"></a>
+					<a href="https://www.npmjs.com/package/typed-signals"><img src="https://badgen.net/npm/v/typed-signals" alt="NPM version"></a>
+					<a href="https://github.com/lusito/typed-signals/blob/master/LICENSE"><img src="https://badgen.net/github/license/lusito/typed-signals" alt="License"></a>
+					<a href="https://github.com/lusito/typed-signals"><img src="https://badgen.net/github/stars/lusito/typed-signals" alt="Stars"></a>
+				<a href="https://github.com/lusito/typed-signals"><img src="https://badgen.net/github/watchers/lusito/typed-signals" alt="Watchers"></a></p>
 				<table>
 					<thead>
 						<tr>
@@ -161,28 +165,28 @@ mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>
 				<p>Collectors can be used to stop processing further handlers depending on the return value of a handler and/or to collect return values of those handlers.</p>
 				<p>Built-in Collectors:</p>
 				<ul>
-					<li><code>CollectorLast&lt;CB extends Function, RT&gt;</code><ul>
+					<li><code>CollectorLast&lt;THandler extends (...args: any[]) =&gt; any&gt;</code><ul>
 							<li>Returns the result of the last signal handler from a signal emission.</li>
 						</ul>
 					</li>
-					<li><code>CollectorUntil0&lt;CB extends Function&gt;</code><ul>
+					<li><code>CollectorUntil0&lt;THandler extends (...args: any[]) =&gt; boolean&gt;</code><ul>
 							<li>Keep signal emissions going while all handlers return true.</li>
 						</ul>
 					</li>
-					<li><code>CollectorWhile0&lt;CB extends Function&gt;</code><ul>
+					<li><code>CollectorWhile0&lt;THandler extends (...args: any[]) =&gt; boolean&gt;</code><ul>
 							<li>Keep signal emissions going while all handlers return false.</li>
 						</ul>
 					</li>
-					<li><code>CollectorArray&lt;CB extends Function, RT&gt;</code><ul>
+					<li><code>CollectorArray&lt;THandler extends (...args: any[]) =&gt; any&gt;</code><ul>
 							<li>Returns the result of the all signal handlers from a signal emission in an array.</li>
 						</ul>
 					</li>
 				</ul>
-				<p><code>CB</code> must be the same function signature as the signal, <code>RT</code> must be the return type of the signal. Here is an example:</p>
+				<p><code>THandler</code> must be the same function signature as the signal. Here is an example:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Signal, CollectorLast } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-signals"</span>;
 
 <span class="hljs-keyword">let</span> mySignal = <span class="hljs-keyword">new</span> Signal&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">string</span>&gt;();
-<span class="hljs-keyword">let</span> collector = <span class="hljs-keyword">new</span> CollectorLast&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">string</span>, <span class="hljs-built_in">string</span>&gt;(mySignal);
+<span class="hljs-keyword">let</span> collector = <span class="hljs-keyword">new</span> CollectorLast&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">string</span>&gt;(mySignal);
 mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span> <span class="hljs-string">'Hello World'</span>);
 mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span> <span class="hljs-string">'Foo Bar'</span>);
 collector.emit(); <span class="hljs-comment">// calls signal.emit();</span>
