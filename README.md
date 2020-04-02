@@ -1,6 +1,10 @@
 ![](https://lusito.github.io/typed-signals/typed_signals.png)
 
-[![License](https://img.shields.io/badge/License-CC0%20Public%20Domain-blue.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
+[![Minified + gzipped size](https://badgen.net/bundlephobia/minzip/typed-signals)](https://www.npmjs.com/package/typed-signals)
+[![NPM version](https://badgen.net/npm/v/typed-signals)](https://www.npmjs.com/package/typed-signals)
+[![License](https://badgen.net/github/license/lusito/typed-signals)](https://github.com/lusito/typed-signals/blob/master/LICENSE)
+[![Stars](https://badgen.net/github/stars/lusito/typed-signals)](https://github.com/lusito/typed-signals)
+[![Watchers](https://badgen.net/github/watchers/lusito/typed-signals)](https://github.com/lusito/typed-signals)
 
 |Master|[![Build Status](https://travis-ci.org/Lusito/typed-signals.svg?branch=master)](https://travis-ci.org/Lusito/typed-signals)|[![Code Coverage](https://coveralls.io/repos/github/Lusito/typed-signals/badge.svg?branch=master)](https://coveralls.io/github/Lusito/typed-signals)|
 |---|---|---|
@@ -10,7 +14,7 @@ A type-checked [signal](https://en.wikipedia.org/wiki/Signals_and_slots) library
 [Performance of a C++11 Signal System](https://testbit.eu/cpp11-signal-system-performance/).
 Of course, some changes have been made to make it work with TypeScript.
 
-The original unit tests and additional ones are running automatically on 
+The original unit tests and additional ones are running automatically on [Travis-CI](https://travis-ci.org/)
 
 ### Why Typed-Signals?
 
@@ -94,22 +98,22 @@ mySignal.connect(()=>console.log('first'), 0);
 Collectors can be used to stop processing further handlers depending on the return value of a handler and/or to collect return values of those handlers.
 
 Built-in Collectors:
-- `CollectorLast<CB extends Function, RT>`
+- `CollectorLast<THandler extends (...args: any[]) => any>`
     - Returns the result of the last signal handler from a signal emission.
-- `CollectorUntil0<CB extends Function>`
+- `CollectorUntil0<THandler extends (...args: any[]) => boolean>`
     - Keep signal emissions going while all handlers return true.
-- `CollectorWhile0<CB extends Function>`
+- `CollectorWhile0<THandler extends (...args: any[]) => boolean>`
     - Keep signal emissions going while all handlers return false.
-- `CollectorArray<CB extends Function, RT>`
+- `CollectorArray<THandler extends (...args: any[]) => any>`
     - Returns the result of the all signal handlers from a signal emission in an array.
 
-`CB` must be the same function signature as the signal, `RT` must be the return type of the signal. Here is an example:
+`THandler` must be the same function signature as the signal. Here is an example:
 
 ```typescript
 import { Signal, CollectorLast } from "typed-signals";
 
 let mySignal = new Signal<() => string>();
-let collector = new CollectorLast<() => string, string>(mySignal);
+let collector = new CollectorLast<() => string>(mySignal);
 mySignal.connect(()=> 'Hello World');
 mySignal.connect(()=> 'Foo Bar');
 collector.emit(); // calls signal.emit();

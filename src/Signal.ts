@@ -3,17 +3,22 @@
 /**
  * SignalLink implements a doubly-linked ring with nodes containing the signal handlers.
  */
-class SignalLink {
+class SignalLink<THandler extends (...args: any[]) => any> {
     private enabled = true;
-    private readonly order: number;
-    public newLink = false;
-    public next: SignalLink;
-    public prev: SignalLink;
-    public callback: Function | null = null;
 
-    public constructor(prev: SignalLink | null = null, next: SignalLink | null = null, order: number = 0) {
-        this.prev = prev ? prev : this;
-        this.next = next ? next : this;
+    private readonly order: number;
+
+    public newLink = false;
+
+    public next: SignalLink<THandler>;
+
+    public prev: SignalLink<THandler>;
+
+    public callback: THandler | null = null;
+
+    public constructor(prev: SignalLink<THandler> | null = null, next: SignalLink<THandler> | null = null, order = 0) {
+        this.prev = prev ?? this;
+        this.next = next ?? this;
         this.order = order;
     }
 
@@ -31,11 +36,10 @@ class SignalLink {
         this.prev.next = this.next;
     }
 
-    public insert(callback: Function, order: number): SignalLink {
+    public insert(callback: THandler, order: number): SignalLink<THandler> {
         let after = this.prev;
         while (after !== this) {
-            if (after.order <= order)
-                break;
+            if (after.order <= order) break;
             after = after.prev;
         }
 
@@ -54,7 +58,7 @@ class SignalLink {
 export interface SignalConnection {
     /**
      * Stop this connection from receiving further events permanently.
-     * 
+     *
      * @returns false if the connection has already been severed.
      */
     disconnect(): boolean;
@@ -68,14 +72,14 @@ export interface SignalConnection {
 /**
  * Implementation of SignalConnection, for internal use only.
  */
-class SignalConnectionImpl implements SignalConnection {
-    private link: SignalLink | null;
+class SignalConnectionImpl<THandler extends (...args: any[]) => any> implements SignalConnection {
+    private link: SignalLink<THandler> | null;
 
     /**
      * @param head The head link of the signal.
      * @param link The actual link of the connection.
      */
-    public constructor(head: SignalLink, link: SignalLink) {
+    public constructor(link: SignalLink<THandler>) {
         this.link = link;
     }
 
@@ -90,12 +94,11 @@ class SignalConnectionImpl implements SignalConnection {
     }
 
     public set enabled(enable: boolean) {
-        if (this.link)
-            this.link.setEnabled(enable);
+        if (this.link) this.link.setEnabled(enable);
     }
 
     public get enabled(): boolean {
-        return this.link !== null && this.link.isEnabled();
+        return !!this.link?.isEnabled();
     }
 }
 
@@ -107,7 +110,7 @@ export class SignalConnections {
 
     /**
      * Add a connection to the list.
-     * @param connection 
+     * @param connection
      */
     public add(connection: SignalConnection) {
         this.list.push(connection);
@@ -126,49 +129,38 @@ export class SignalConnections {
 
 /**
  * A signal is a way to publish and subscribe to events.
- * 
- * @typeparam CB The function signature to be implemented by handlers.
+ *
+ * @typeparam THandler The function signature to be implemented by handlers.
  */
-export class Signal<CB extends Function> {
-    /**
-     * Publish this signal event (call all handlers).
-     * 
-     * @function
-     */
-    public readonly emit: CB;
-    private readonly head = new SignalLink();
+export class Signal<THandler extends (...args: any[]) => any> {
+    private readonly head = new SignalLink<THandler>();
+
     private hasNewLinks = false;
+
     private emitDepth = 0;
 
     /**
-     * Create a new signal.
-     */
-    public constructor() {
-        this.emit = this.emitInternal.bind(this);
-    }
-
-    /**
      * Subscribe to this signal.
-     * 
+     *
      * @param callback This callback will be run when emit() is called.
      * @param order Handlers with a higher order value will be called later.
      */
-    public connect(callback: CB, order: number = 0): SignalConnection {
+    public connect(callback: THandler, order = 0): SignalConnection {
         const link = this.head.insert(callback, order);
         if (this.emitDepth > 0) {
             this.hasNewLinks = true;
             link.newLink = true;
         }
-        return new SignalConnectionImpl(this.head, link);
+        return new SignalConnectionImpl(link);
     }
 
     /**
      * Unsubscribe from this signal with the original callback instance.
      * While you can use this method, the SignalConnection returned by connect() will not be updated!
-     * 
+     *
      * @param callback The callback you passed to connect().
      */
-    public disconnect(callback: CB) {
+    public disconnect(callback: THandler) {
         for (let link = this.head.next; link !== this.head; link = link.next) {
             if (link.callback === callback) {
                 link.unlink();
@@ -187,26 +179,27 @@ export class Signal<CB extends Function> {
         }
     }
 
-    private emitInternal() {
+    /**
+     * Publish this signal event (call all handlers).
+     */
+    public emit(...args: Parameters<THandler>) {
         this.emitDepth++;
 
         for (let link = this.head.next; link !== this.head; link = link.next) {
-            if (link.isEnabled() && link.callback)
-                link.callback.apply(null, arguments);
+            if (link.isEnabled() && link.callback) link.callback.apply(null, args);
         }
 
         this.emitDepth--;
         this.unsetNewLink();
     }
 
-    protected emitCollecting<RT>(collector: Collector<CB, RT>, args: any) {
+    protected emitCollecting(collector: Collector<THandler>, args: Parameters<THandler>) {
         this.emitDepth++;
 
         for (let link = this.head.next; link !== this.head; link = link.next) {
             if (link.isEnabled() && link.callback) {
                 const result = link.callback.apply(null, args);
-                if (!collector.handleResult(result))
-                    break;
+                if (!collector.handleResult(result)) break;
             }
         }
         this.emitDepth--;
@@ -214,9 +207,8 @@ export class Signal<CB extends Function> {
     }
 
     private unsetNewLink() {
-        if (this.hasNewLinks && this.emitDepth == 0) {
-            for (let link = this.head.next; link !== this.head; link = link.next)
-                link.newLink = false;
+        if (this.hasNewLinks && this.emitDepth === 0) {
+            for (let link = this.head.next; link !== this.head; link = link.next) link.newLink = false;
             this.hasNewLinks = false;
         }
     }
@@ -224,46 +216,47 @@ export class Signal<CB extends Function> {
 
 /**
  * Base class for collectors.
- * 
- * @typeparam CB The function signature to be implemented by handlers.
- * @typeparam RT The return type of CB
+ *
+ * @typeparam THandler The function signature to be implemented by handlers.
  */
-export abstract class Collector<CB extends Function, RT> {
+export abstract class Collector<THandler extends (...args: any[]) => any> {
     /**
      * Publish the bound signal event (call all handlers) to start the collection process.
-     * 
+     *
      * @method
      */
-    public readonly emit: CB;
+    public readonly emit: (...args: Parameters<THandler>) => void;
 
     /**
      * Create a new collector.
-     * 
+     *
      * @param signal The signal to emit.
      */
-    public constructor(signal: Signal<CB>) {
-        const self = this;
-        this.emit = function () { (signal as any).emitCollecting(self, arguments) } as any;
+    public constructor(signal: Signal<THandler>) {
+        // eslint-disable-next-line dot-notation
+        this.emit = (...args: Parameters<THandler>) => {
+            // eslint-disable-next-line dot-notation
+            signal["emitCollecting"](this, args);
+        };
     }
 
     /**
      * Process the results of a handler invocation.
-     * 
+     *
      * @param result true to continue processing handlers.
      */
-    public abstract handleResult(result: RT): boolean;
+    public abstract handleResult(result: ReturnType<THandler>): boolean;
 }
 
 /**
  * Returns the result of the last signal handler from a signal emission.
- * 
- * @typeparam CB The function signature to be implemented by handlers.
- * @typeparam RT The return type of CB
+ *
+ * @typeparam THandler The function signature to be implemented by handlers.
  */
-export class CollectorLast<CB extends Function, RT> extends Collector<CB, RT> {
-    private result: RT | undefined;
+export class CollectorLast<THandler extends (...args: any[]) => any> extends Collector<THandler> {
+    private result: ReturnType<THandler> | undefined;
 
-    public handleResult(result: RT): boolean {
+    public handleResult(result: ReturnType<THandler>): boolean {
         this.result = result;
         return true;
     }
@@ -271,7 +264,7 @@ export class CollectorLast<CB extends Function, RT> extends Collector<CB, RT> {
     /**
      * Get the result of the last signal handler.
      */
-    public getResult(): RT | undefined {
+    public getResult(): ReturnType<THandler> | undefined {
         return this.result;
     }
 
@@ -285,16 +278,15 @@ export class CollectorLast<CB extends Function, RT> extends Collector<CB, RT> {
 
 /**
  * Keep signal emissions going while all handlers return true.
- * 
- * @typeparam CB The function signature to be implemented by handlers.
- * Return type of CB must be boolean.
+ *
+ * @typeparam THandler The function signature to be implemented by handlers.
  */
-export class CollectorUntil0<CB extends Function> extends Collector<CB, boolean> {
-    private result: boolean = false;
+export class CollectorUntil0<THandler extends (...args: any[]) => boolean> extends Collector<THandler> {
+    private result = false;
 
     public handleResult(result: boolean): boolean {
         this.result = result;
-        return this.result ? true : false;
+        return this.result;
     }
 
     /**
@@ -314,16 +306,15 @@ export class CollectorUntil0<CB extends Function> extends Collector<CB, boolean>
 
 /**
  * Keep signal emissions going while all handlers return false.
- * 
- * @typeparam CB The function signature to be implemented by handlers.
- * Return type of CB must be boolean.
+ *
+ * @typeparam THandler The function signature to be implemented by handlers.
  */
-export class CollectorWhile0<CB extends Function> extends Collector<CB, boolean> {
-    private result: boolean = false;
+export class CollectorWhile0<THandler extends (...args: any[]) => boolean> extends Collector<THandler> {
+    private result = false;
 
     public handleResult(result: boolean): boolean {
         this.result = result;
-        return this.result ? false : true;
+        return !this.result;
     }
 
     /**
@@ -343,14 +334,13 @@ export class CollectorWhile0<CB extends Function> extends Collector<CB, boolean>
 
 /**
  * Returns the result of the all signal handlers from a signal emission in an array.
- * 
- * @typeparam CB The function signature to be implemented by handlers.
- * @typeparam RT The return type of CB
+ *
+ * @typeparam THandler The function signature to be implemented by handlers.
  */
-export class CollectorArray<CB extends Function, RT> extends Collector<CB, RT> {
-    private result: RT[] = [];
+export class CollectorArray<THandler extends (...args: any[]) => any> extends Collector<THandler> {
+    private result: Array<ReturnType<THandler>> = [];
 
-    public handleResult(result: RT): boolean {
+    public handleResult(result: ReturnType<THandler>): boolean {
         this.result.push(result);
         return true;
     }
@@ -358,7 +348,7 @@ export class CollectorArray<CB extends Function, RT> extends Collector<CB, RT> {
     /**
      * Get the list of results from the signal handlers.
      */
-    public getResult(): RT[] {
+    public getResult(): Array<ReturnType<THandler>> {
         return this.result;
     }
 
