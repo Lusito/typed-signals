@@ -98,7 +98,8 @@ class SignalConnectionImpl<THandler extends (...args: any[]) => any> implements 
     }
 
     public get enabled(): boolean {
-        return !!this.link?.isEnabled();
+        // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+        return this.link !== null && this.link.isEnabled();
     }
 }
 

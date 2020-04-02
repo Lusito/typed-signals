@@ -25,7 +25,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc -p tsconfig-build.json",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "doc": "rimraf docs && typedoc --out docs --excludeNotExported --exclude src/*.spec.ts src && copyfiles -a -f doc-assets/* docs",
     "lint": "npm run lint:style && npm run lint:es && npm run lint:package",

@@ -1,15 +1,8 @@
-/* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-undef */
 // CC0 Public Domain: http://creativecommons.org/publicdomain/zero/1.0/
 
-import {
-    Signal,
-    SignalConnections,
-    CollectorLast,
-    CollectorUntil0,
-    CollectorWhile0,
-    CollectorArray,
-} from "./Signal";
+import { Signal, SignalConnections, CollectorLast, CollectorUntil0, CollectorWhile0, CollectorArray } from "./Signal";
 
 class Dummy {}
 
