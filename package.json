@@ -19,8 +19,8 @@
   },
   "license": "CC0-1.0",
   "author": "Santo Pfingsten",
-  "main": "dist/Signal.js",
-  "types": "dist/Signal.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
