@@ -27,7 +27,7 @@
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "doc": "rimraf docs && typedoc --out docs --excludeNotExported --exclude src/*.spec.ts src && copyfiles -a -f doc-assets/* docs",
+    "doc": "rimraf docs && typedoc --excludePrivate --out docs --excludeNotExported --exclude src/*.spec.ts src && copyfiles -a -f doc-assets/* docs",
     "lint": "npm run lint:style && npm run lint:es && npm run lint:package",
     "lint:es": "eslint {src,test}/**/*.{ts,tsx} --ext .ts,.tsx --ignore-path .prettierignore",
     "lint:es:fix": "npm run lint:es -- --fix",
@@ -40,7 +40,7 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@lusito/eslint-config": "^1.0.1",
+    "@lusito/eslint-config": "^1.0.4",
     "@lusito/prettier-config": "^1.0.0",
     "@lusito/stylelint-config": "^1.0.0",
     "@types/jest": "^25.1.5",
