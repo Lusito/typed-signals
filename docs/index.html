@@ -54,7 +54,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> typed-signals</h1>
+			<h1>typed-signals</h1>
 		</div>
 	</div>
 </header>
@@ -63,7 +63,11 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<p><img src="https://lusito.github.io/typed-signals/typed_signals.png" alt=""></p>
-				<p><a href="http://creativecommons.org/publicdomain/zero/1.0/"><img src="https://img.shields.io/badge/License-CC0%20Public%20Domain-blue.svg" alt="License"></a></p>
+				<p><a href="https://www.npmjs.com/package/typed-signals"><img src="https://badgen.net/bundlephobia/minzip/typed-signals" alt="Minified + gzipped size"></a>
+					<a href="https://www.npmjs.com/package/typed-signals"><img src="https://badgen.net/npm/v/typed-signals" alt="NPM version"></a>
+					<a href="https://github.com/lusito/typed-signals/blob/master/LICENSE"><img src="https://badgen.net/github/license/lusito/typed-signals" alt="License"></a>
+					<a href="https://github.com/lusito/typed-signals"><img src="https://badgen.net/github/stars/lusito/typed-signals" alt="Stars"></a>
+				<a href="https://github.com/lusito/typed-signals"><img src="https://badgen.net/github/watchers/lusito/typed-signals" alt="Watchers"></a></p>
 				<table>
 					<thead>
 						<tr>
@@ -72,19 +76,19 @@
 							<th><a href="https://coveralls.io/github/Lusito/typed-signals"><img src="https://coveralls.io/repos/github/Lusito/typed-signals/badge.svg?branch=master" alt="Code Coverage"></a></th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
+					<tbody><tr>
 							<td>Develop</td>
 							<td><a href="https://travis-ci.org/Lusito/typed-signals"><img src="https://travis-ci.org/Lusito/typed-signals.svg?branch=develop" alt="Build Status"></a></td>
 							<td><a href="https://coveralls.io/github/Lusito/typed-signals"><img src="https://coveralls.io/repos/github/Lusito/typed-signals/badge.svg?branch=develop" alt="Code Coverage"></a></td>
 						</tr>
-					</tbody>
-				</table>
+				</tbody></table>
 				<p>A type-checked <a href="https://en.wikipedia.org/wiki/Signals_and_slots">signal</a> library written in TypeScript, usable from plain JavaScript as well. This is a TypeScript port of this excellent C++11 version:
 					<a href="https://testbit.eu/cpp11-signal-system-performance/">Performance of a C++11 Signal System</a>.
 				Of course, some changes have been made to make it work with TypeScript.</p>
-				<p>The original unit tests and additional ones are running automatically on </p>
-				<h3 id="why-typed-signals-">Why Typed-Signals?</h3>
+				<p>The original unit tests and additional ones are running automatically on <a href="https://travis-ci.org/">Travis-CI</a></p>
+				<a href="#why-typed-signals" id="why-typed-signals" style="color: inherit; text-decoration: none;">
+					<h3>Why Typed-Signals?</h3>
+				</a>
 				<ul>
 					<li>Arbitrary arguments lists</li>
 					<li>Type checking</li>
@@ -96,10 +100,14 @@
 					<li>Liberal license: <a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain</a></li>
 					<li><a href="https://lusito.github.io/typed-signals/index.html">Fully documented</a> using TypeDoc</li>
 				</ul>
-				<h3 id="installation-via-npm">Installation via NPM</h3>
+				<a href="#installation-via-npm" id="installation-via-npm" style="color: inherit; text-decoration: none;">
+					<h3>Installation via NPM</h3>
+				</a>
 				<p><code>npm install typed-signals --save</code></p>
-				<h3 id="simple-usage">Simple usage</h3>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { Signal } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-signals"</span>;
+				<a href="#simple-usage" id="simple-usage" style="color: inherit; text-decoration: none;">
+					<h3>Simple usage</h3>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Signal } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-signals"</span>;
 
 <span class="hljs-comment">// Create a new signal, defining the function signature of handlers :</span>
 <span class="hljs-keyword">let</span> mySignal = <span class="hljs-keyword">new</span> Signal&lt;<span class="hljs-function">(<span class="hljs-params">n: <span class="hljs-built_in">number</span>, b: <span class="hljs-built_in">boolean</span>, s: <span class="hljs-built_in">string</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>&gt;();
@@ -111,10 +119,11 @@
 mySignal.emit(<span class="hljs-number">42</span>, <span class="hljs-literal">true</span>, <span class="hljs-string">'Galactic Gargleblaster'</span>);
 
 <span class="hljs-comment">// Disconnect a handler:</span>
-connection.disconnect();
-</code></pre>
-				<h3 id="connections">Connections</h3>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { Signal, SignalConnections } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-signals"</span>;
+connection.disconnect();</code></pre>
+				<a href="#connections" id="connections" style="color: inherit; text-decoration: none;">
+					<h3>Connections</h3>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Signal, SignalConnections } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-signals"</span>;
 
 <span class="hljs-keyword">let</span> mySignal = <span class="hljs-keyword">new</span> Signal&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">void</span>&gt;();
 
@@ -134,10 +143,11 @@ connections.add(mySignal.connect(<span class="hljs-function"><span class="hljs-p
 connections.disconnectAll();
 
 <span class="hljs-comment">// Or disconnect all handlers of a signal:</span>
-mySignal.disconnectAll();
-</code></pre>
-				<h3 id="execution-order">Execution order</h3>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { Signal } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-signals"</span>;
+mySignal.disconnectAll();</code></pre>
+				<a href="#execution-order" id="execution-order" style="color: inherit; text-decoration: none;">
+					<h3>Execution order</h3>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Signal } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-signals"</span>;
 
 <span class="hljs-keyword">let</span> mySignal = <span class="hljs-keyword">new</span> Signal&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">void</span>&gt;();
 
@@ -148,44 +158,50 @@ mySignal.disconnectAll();
 
 <span class="hljs-comment">// Second parameter to connect is an order value. A higher order value means later execution:</span>
 mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'second'</span>), <span class="hljs-number">1</span>);
-mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'first'</span>), <span class="hljs-number">0</span>);
-</code></pre>
-				<h3 id="collectors">Collectors</h3>
+mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'first'</span>), <span class="hljs-number">0</span>);</code></pre>
+				<a href="#collectors" id="collectors" style="color: inherit; text-decoration: none;">
+					<h3>Collectors</h3>
+				</a>
 				<p>Collectors can be used to stop processing further handlers depending on the return value of a handler and/or to collect return values of those handlers.</p>
 				<p>Built-in Collectors:</p>
 				<ul>
-					<li><code>CollectorLast&lt;CB extends Function, RT&gt;</code><ul>
+					<li><code>CollectorLast&lt;THandler extends (...args: any[]) =&gt; any&gt;</code><ul>
 							<li>Returns the result of the last signal handler from a signal emission.</li>
 						</ul>
 					</li>
-					<li><code>CollectorUntil0&lt;CB extends Function&gt;</code><ul>
+					<li><code>CollectorUntil0&lt;THandler extends (...args: any[]) =&gt; boolean&gt;</code><ul>
 							<li>Keep signal emissions going while all handlers return true.</li>
 						</ul>
 					</li>
-					<li><code>CollectorWhile0&lt;CB extends Function&gt;</code><ul>
+					<li><code>CollectorWhile0&lt;THandler extends (...args: any[]) =&gt; boolean&gt;</code><ul>
 							<li>Keep signal emissions going while all handlers return false.</li>
 						</ul>
 					</li>
-					<li><code>CollectorArray&lt;CB extends Function, RT&gt;</code><ul>
+					<li><code>CollectorArray&lt;THandler extends (...args: any[]) =&gt; any&gt;</code><ul>
 							<li>Returns the result of the all signal handlers from a signal emission in an array.</li>
 						</ul>
 					</li>
 				</ul>
-				<p><code>CB</code> must be the same function signature as the signal, <code>RT</code> must be the return type of the signal. Here is an example:</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { Signal, CollectorLast } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-signals"</span>;
+				<p><code>THandler</code> must be the same function signature as the signal. Here is an example:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Signal, CollectorLast } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-signals"</span>;
 
 <span class="hljs-keyword">let</span> mySignal = <span class="hljs-keyword">new</span> Signal&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">string</span>&gt;();
-<span class="hljs-keyword">let</span> collector = <span class="hljs-keyword">new</span> CollectorLast&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">string</span>, <span class="hljs-built_in">string</span>&gt;(mySignal);
+<span class="hljs-keyword">let</span> collector = <span class="hljs-keyword">new</span> CollectorLast&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">string</span>&gt;(mySignal);
 mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span> <span class="hljs-string">'Hello World'</span>);
 mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span> <span class="hljs-string">'Foo Bar'</span>);
 collector.emit(); <span class="hljs-comment">// calls signal.emit();</span>
-<span class="hljs-built_in">console</span>.log(collector.getResult()); <span class="hljs-comment">// 'Foo Bar'</span>
-</code></pre>
-				<h3 id="report-isssues">Report isssues</h3>
+<span class="hljs-built_in">console</span>.log(collector.getResult()); <span class="hljs-comment">// 'Foo Bar'</span></code></pre>
+				<a href="#report-isssues" id="report-isssues" style="color: inherit; text-decoration: none;">
+					<h3>Report isssues</h3>
+				</a>
 				<p>Something not working quite as expected? Do you need a feature that has not been implemented yet? Check the <a href="https://github.com/Lusito/typed-signals/issues">issue tracker</a> and add a new one if your problem is not already listed. Please try to provide a detailed description of your problem, including the steps to reproduce it.</p>
-				<h3 id="contribute">Contribute</h3>
+				<a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
+					<h3>Contribute</h3>
+				</a>
 				<p>Awesome! If you would like to contribute with a new feature or submit a bugfix, fork this repo and send a pull request. Please, make sure all the unit tests are passing before submitting and add new ones in case you introduced new features.</p>
-				<h3 id="license">License</h3>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h3>License</h3>
+				</a>
 				<p>Typed-Signals has been released under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain</a> license, meaning you
 				can use it free of charge, without strings attached in commercial and non-commercial projects. Credits are appreciated but not mandatory.</p>
 			</div>
@@ -196,8 +212,38 @@ collector.emit(); <span class="hljs-comment">// calls signal.emit();</span>
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_signal_.html">"<wbr>Signal"</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/_collector_.html">&quot;<wbr>Collector&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_collectorarray_.html">&quot;<wbr>Collector<wbr>Array&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_collectorlast_.html">&quot;<wbr>Collector<wbr>Last&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_collectoruntil0_.html">&quot;<wbr>Collector<wbr>Until0&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_collectorwhile0_.html">&quot;<wbr>Collector<wbr>While0&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_signal_.html">&quot;<wbr>Signal&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_signalconnection_.html">&quot;<wbr>Signal<wbr>Connection&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_signalconnections_.html">&quot;<wbr>Signal<wbr>Connections&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_signallink_.html">&quot;<wbr>Signal<wbr>Link&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_index_.html">&quot;index&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_testutils_.html">&quot;test<wbr>Utils&quot;</a>
 					</li>
 				</ul>
 			</nav>
@@ -213,62 +259,17 @@ collector.emit(); <span class="hljs-comment">// calls signal.emit();</span>
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
