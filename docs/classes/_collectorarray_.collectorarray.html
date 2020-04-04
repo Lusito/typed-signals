@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CollectorUntil0 | typed-signals</title>
+	<title>CollectorArray | typed-signals</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_signal_.html">&quot;Signal&quot;</a>
+					<a href="../modules/_collectorarray_.html">&quot;CollectorArray&quot;</a>
 				</li>
 				<li>
-					<a href="_signal_.collectoruntil0.html">CollectorUntil0</a>
+					<a href="_collectorarray_.collectorarray.html">CollectorArray</a>
 				</li>
 			</ul>
-			<h1>Class CollectorUntil0&lt;THandler&gt;</h1>
+			<h1>Class CollectorArray&lt;THandler&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Keep signal emissions going while all handlers return true.</p>
+						<p>Returns the result of the all signal handlers from a signal emission in an array.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,7 @@
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
-						<h4>THandler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h4>
+						<h4>THandler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span></h4>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
 								<p>The function signature to be implemented by handlers.</p>
@@ -91,10 +91,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="_signal_.collector.html" class="tsd-signature-type">Collector</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">THandler</span><span class="tsd-signature-symbol">&gt;</span>
+						<a href="_collector_.collector.html" class="tsd-signature-type">Collector</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">THandler</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">CollectorUntil0</span>
+								<span class="target">CollectorArray</span>
 							</li>
 						</ul>
 					</li>
@@ -107,22 +107,21 @@
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><a href="_signal_.collectoruntil0.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><a href="_collectorarray_.collectorarray.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_signal_.collectoruntil0.html#emit" class="tsd-kind-icon">emit</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_signal_.collectoruntil0.html#result" class="tsd-kind-icon">result</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_collectorarray_.collectorarray.html#emit" class="tsd-kind-icon">emit</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_signal_.collectoruntil0.html#getresult" class="tsd-kind-icon">get<wbr>Result</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_signal_.collectoruntil0.html#handleresult" class="tsd-kind-icon">handle<wbr>Result</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_signal_.collectoruntil0.html#reset" class="tsd-kind-icon">reset</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collectorarray_.collectorarray.html#getresult" class="tsd-kind-icon">get<wbr>Result</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_collectorarray_.collectorarray.html#handleresult" class="tsd-kind-icon">handle<wbr>Result</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collectorarray_.collectorarray.html#reset" class="tsd-kind-icon">reset</a></li>
 							</ul>
 						</section>
 					</div>
@@ -134,14 +133,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Collector<wbr>Until0<span class="tsd-signature-symbol">(</span>signal<span class="tsd-signature-symbol">: </span><a href="_signal_.signal.html" class="tsd-signature-type">Signal</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">THandler</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_signal_.collectoruntil0.html" class="tsd-signature-type">CollectorUntil0</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Collector<wbr>Array<span class="tsd-signature-symbol">(</span>signal<span class="tsd-signature-symbol">: </span><a href="_signal_.signal.html" class="tsd-signature-type">Signal</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">THandler</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_collectorarray_.collectorarray.html" class="tsd-signature-type">CollectorArray</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_signal_.collector.html">Collector</a>.<a href="_signal_.collector.html#constructor">constructor</a></p>
+								<p>Inherited from <a href="_collector_.collector.html">Collector</a>.<a href="_collector_.collector.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Lusito/typed-signals/blob/412d563/src/Signal.ts#L228">Signal.ts:228</a></li>
+									<li>Defined in <a href="https://github.com/Lusito/typed-signals/blob/75062ab/src/Collector.ts#L14">Collector.ts:14</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -160,21 +159,21 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_signal_.collectoruntil0.html" class="tsd-signature-type">CollectorUntil0</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_collectorarray_.collectorarray.html" class="tsd-signature-type">CollectorArray</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="emit" class="tsd-anchor"></a>
 					<h3>emit</h3>
 					<div class="tsd-signature tsd-kind-icon">emit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Parameters</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">THandler</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="_signal_.collector.html">Collector</a>.<a href="_signal_.collector.html#emit">emit</a></p>
+						<p>Inherited from <a href="_collector_.collector.html">Collector</a>.<a href="_collector_.collector.html#emit">emit</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/Lusito/typed-signals/blob/412d563/src/Signal.ts#L228">Signal.ts:228</a></li>
+							<li>Defined in <a href="https://github.com/Lusito/typed-signals/blob/75062ab/src/Collector.ts#L14">Collector.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -208,16 +207,6 @@
 						</ul>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="result" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> result</h3>
-					<div class="tsd-signature tsd-kind-icon">result<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Lusito/typed-signals/blob/412d563/src/Signal.ts#L285">Signal.ts:285</a></li>
-						</ul>
-					</aside>
-				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
@@ -225,21 +214,21 @@
 					<a name="getresult" class="tsd-anchor"></a>
 					<h3>get<wbr>Result</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Result<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Result<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReturnType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">THandler</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Lusito/typed-signals/blob/412d563/src/Signal.ts#L295">Signal.ts:295</a></li>
+									<li>Defined in <a href="https://github.com/Lusito/typed-signals/blob/75062ab/src/CollectorArray.ts#L19">CollectorArray.ts:19</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Get the result of the last signal handler.</p>
+									<p>Get the list of results from the signal handlers.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReturnType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">THandler</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -247,20 +236,20 @@
 					<a name="handleresult" class="tsd-anchor"></a>
 					<h3>handle<wbr>Result</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">handle<wbr>Result<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">handle<wbr>Result<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReturnType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">THandler</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="_signal_.collector.html">Collector</a>.<a href="_signal_.collector.html#handleresult">handleResult</a></p>
+								<p>Overrides <a href="_collector_.collector.html">Collector</a>.<a href="_collector_.collector.html#handleresult">handleResult</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Lusito/typed-signals/blob/412d563/src/Signal.ts#L287">Signal.ts:287</a></li>
+									<li>Defined in <a href="https://github.com/Lusito/typed-signals/blob/75062ab/src/CollectorArray.ts#L11">CollectorArray.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>result: <span class="tsd-signature-type">boolean</span></h5>
+									<h5>result: <span class="tsd-signature-type">ReturnType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">THandler</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -277,7 +266,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Lusito/typed-signals/blob/412d563/src/Signal.ts#L302">Signal.ts:302</a></li>
+									<li>Defined in <a href="https://github.com/Lusito/typed-signals/blob/75062ab/src/CollectorArray.ts#L26">CollectorArray.ts:26</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -297,61 +286,67 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_collector_.html">&quot;<wbr>Collector&quot;</a>
+					</li>
 					<li class="current tsd-kind-module">
+						<a href="../modules/_collectorarray_.html">&quot;<wbr>Collector<wbr>Array&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_collectorlast_.html">&quot;<wbr>Collector<wbr>Last&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_collectoruntil0_.html">&quot;<wbr>Collector<wbr>Until0&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_collectorwhile0_.html">&quot;<wbr>Collector<wbr>While0&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="../modules/_signal_.html">&quot;<wbr>Signal&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_signalconnection_.html">&quot;<wbr>Signal<wbr>Connection&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_signalconnections_.html">&quot;<wbr>Signal<wbr>Connections&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_signallink_.html">&quot;<wbr>Signal<wbr>Link&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_index_.html">&quot;index&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_testutils_.html">&quot;test<wbr>Utils&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_signal_.collector.html" class="tsd-kind-icon">Collector</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_signal_.collectorarray.html" class="tsd-kind-icon">Collector<wbr>Array</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_signal_.collectorlast.html" class="tsd-kind-icon">Collector<wbr>Last</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_signal_.collectoruntil0.html" class="tsd-kind-icon">Collector<wbr>Until0</a>
+						<a href="_collectorarray_.collectorarray.html" class="tsd-kind-icon">Collector<wbr>Array</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
-								<a href="_signal_.collectoruntil0.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="_collectorarray_.collectorarray.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="_signal_.collectoruntil0.html#emit" class="tsd-kind-icon">emit</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_signal_.collectoruntil0.html#result" class="tsd-kind-icon">result</a>
+								<a href="_collectorarray_.collectorarray.html#emit" class="tsd-kind-icon">emit</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_signal_.collectoruntil0.html#getresult" class="tsd-kind-icon">get<wbr>Result</a>
+								<a href="_collectorarray_.collectorarray.html#getresult" class="tsd-kind-icon">get<wbr>Result</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="_signal_.collectoruntil0.html#handleresult" class="tsd-kind-icon">handle<wbr>Result</a>
+								<a href="_collectorarray_.collectorarray.html#handleresult" class="tsd-kind-icon">handle<wbr>Result</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_signal_.collectoruntil0.html#reset" class="tsd-kind-icon">reset</a>
+								<a href="_collectorarray_.collectorarray.html#reset" class="tsd-kind-icon">reset</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_signal_.collectorwhile0.html" class="tsd-kind-icon">Collector<wbr>While0</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_signal_.signal.html" class="tsd-kind-icon">Signal</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="_signal_.signalconnections.html" class="tsd-kind-icon">Signal<wbr>Connections</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/_signal_.signalconnection.html" class="tsd-kind-icon">Signal<wbr>Connection</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -372,9 +367,6 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
 			</ul>
 		</div>
 	</div>

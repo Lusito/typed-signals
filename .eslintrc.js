@@ -1,6 +1,12 @@
 module.exports = {
     extends: ["@lusito/eslint-config"],
-    rules: {
-        "max-classes-per-file": "off",
-    },
+    rules: {},
+    overrides: [
+        {
+            files: ["*.spec.{ts,tsx}", "src/testUtils.ts"],
+            rules: {
+                "max-classes-per-file": "off",
+            },
+        },
+    ],
 };

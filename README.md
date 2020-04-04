@@ -16,6 +16,9 @@ Of course, some changes have been made to make it work with TypeScript.
 
 The original unit tests and additional ones are running automatically on [Travis-CI](https://travis-ci.org/)
 
+#### Fair Warning
+With version 2, the target is now es2015, so if you want to support older browser, you'll have to ensure that this module is being transpiled to an older es version during your build-process.
+
 ### Why Typed-Signals?
 
 - Arbitrary arguments lists
