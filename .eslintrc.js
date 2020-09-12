@@ -1,5 +1,5 @@
 module.exports = {
-    extends: ["@lusito/eslint-config"],
+    extends: ["@lusito/eslint-config", "plugin:jest/recommended"],
     rules: {},
     overrides: [
         {
@@ -9,4 +9,7 @@ module.exports = {
             },
         },
     ],
+    env: {
+        "jest/globals": true,
+    },
 };

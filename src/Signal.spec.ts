@@ -219,7 +219,7 @@ describe("Signal", () => {
 
     it("should pass parameters to listeners", () => {
         const result: string[] = [];
-        const sig1 = new Signal<(result: string[], f: number, i: number, s: string) => void>();
+        const sig1 = new Signal<(_result: string[], f: number, i: number, s: string) => void>();
         const id1 = sig1.connect(float_callback);
         const id2 = sig1.connect((r, f, i) => {
             result.push(`int: ${i}\n`);
