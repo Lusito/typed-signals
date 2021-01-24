@@ -4,16 +4,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>typed-signals</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for typed-signals">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -49,11 +50,6 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
 			<h1>typed-signals</h1>
 		</div>
 	</div>
@@ -86,6 +82,10 @@
 					<a href="https://testbit.eu/cpp11-signal-system-performance/">Performance of a C++11 Signal System</a>.
 				Of course, some changes have been made to make it work with TypeScript.</p>
 				<p>The original unit tests and additional ones are running automatically on <a href="https://travis-ci.org/">Travis-CI</a></p>
+				<a href="#fair-warning" id="fair-warning" style="color: inherit; text-decoration: none;">
+					<h4>Fair Warning</h4>
+				</a>
+				<p>With version 2, the target is now es2015, so if you want to support older browser, you&#39;ll have to ensure that this module is being transpiled to an older es version during your build-process.</p>
 				<a href="#why-typed-signals" id="why-typed-signals" style="color: inherit; text-decoration: none;">
 					<h3>Why Typed-Signals?</h3>
 				</a>
@@ -107,58 +107,61 @@
 				<a href="#simple-usage" id="simple-usage" style="color: inherit; text-decoration: none;">
 					<h3>Simple usage</h3>
 				</a>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Signal } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-signals"</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Signal</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;typed-signals&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// Create a new signal, defining the function signature of handlers :</span>
-<span class="hljs-keyword">let</span> mySignal = <span class="hljs-keyword">new</span> Signal&lt;<span class="hljs-function">(<span class="hljs-params">n: <span class="hljs-built_in">number</span>, b: <span class="hljs-built_in">boolean</span>, s: <span class="hljs-built_in">string</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>&gt;();
+<span style="color: #008000">// Create a new signal, defining the function signature of handlers :</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">mySignal</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Signal</span><span style="color: #000000">&lt;(</span><span style="color: #001080">n</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">, </span><span style="color: #001080">b</span><span style="color: #000000">: </span><span style="color: #267F99">boolean</span><span style="color: #000000">, </span><span style="color: #001080">s</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">void</span><span style="color: #000000">&gt;();</span>
 
-<span class="hljs-comment">//Register a handler:</span>
-<span class="hljs-keyword">let</span> connection = mySignal.connect(<span class="hljs-function">(<span class="hljs-params">n, b, s</span>)=&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Called: <span class="hljs-subst">${n}</span> <span class="hljs-subst">${b}</span> <span class="hljs-subst">${s}</span>`</span>));
+<span style="color: #008000">//Register a handler:</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">connection</span><span style="color: #000000"> = </span><span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">connect</span><span style="color: #000000">((</span><span style="color: #001080">n</span><span style="color: #000000">, </span><span style="color: #001080">b</span><span style="color: #000000">, </span><span style="color: #001080">s</span><span style="color: #000000">)</span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`Called: </span><span style="color: #0000FF">${</span><span style="color: #001080">n</span><span style="color: #0000FF">}</span><span style="color: #A31515"> </span><span style="color: #0000FF">${</span><span style="color: #001080">b</span><span style="color: #0000FF">}</span><span style="color: #A31515"> </span><span style="color: #0000FF">${</span><span style="color: #001080">s</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">));</span>
 
-<span class="hljs-comment">// Emit a signal:</span>
-mySignal.emit(<span class="hljs-number">42</span>, <span class="hljs-literal">true</span>, <span class="hljs-string">'Galactic Gargleblaster'</span>);
+<span style="color: #008000">// Emit a signal:</span>
+<span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">emit</span><span style="color: #000000">(</span><span style="color: #098658">42</span><span style="color: #000000">, </span><span style="color: #0000FF">true</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;Galactic Gargleblaster&#039;</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// Disconnect a handler:</span>
-connection.disconnect();</code></pre>
+<span style="color: #008000">// Disconnect a handler:</span>
+<span style="color: #001080">connection</span><span style="color: #000000">.</span><span style="color: #795E26">disconnect</span><span style="color: #000000">();</span>
+</code></pre>
 				<a href="#connections" id="connections" style="color: inherit; text-decoration: none;">
 					<h3>Connections</h3>
 				</a>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Signal, SignalConnections } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-signals"</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Signal</span><span style="color: #000000">, </span><span style="color: #001080">SignalConnections</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;typed-signals&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">let</span> mySignal = <span class="hljs-keyword">new</span> Signal&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">void</span>&gt;();
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">mySignal</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Signal</span><span style="color: #000000">&lt;() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">void</span><span style="color: #000000">&gt;();</span>
 
-<span class="hljs-comment">// Disable and re-enable handlers</span>
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handler42</span>(<span class="hljs-params"></span>) </span>{}
-<span class="hljs-keyword">let</span> connection = mySignal.connect(handler42);
-connection.enabled = <span class="hljs-literal">false</span>;
-mySignal.emit(); <span class="hljs-comment">// won't call handler42</span>
-connection.enabled = <span class="hljs-literal">true</span>;
-mySignal.emit(); <span class="hljs-comment">// will call handler42</span>
+<span style="color: #008000">// Disable and re-enable handlers</span>
+<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">handler42</span><span style="color: #000000">() {}</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">connection</span><span style="color: #000000"> = </span><span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">connect</span><span style="color: #000000">(</span><span style="color: #001080">handler42</span><span style="color: #000000">);</span>
+<span style="color: #001080">connection</span><span style="color: #000000">.</span><span style="color: #001080">enabled</span><span style="color: #000000"> = </span><span style="color: #0000FF">false</span><span style="color: #000000">;</span>
+<span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">emit</span><span style="color: #000000">(); </span><span style="color: #008000">// won&#039;t call handler42</span>
+<span style="color: #001080">connection</span><span style="color: #000000">.</span><span style="color: #001080">enabled</span><span style="color: #000000"> = </span><span style="color: #0000FF">true</span><span style="color: #000000">;</span>
+<span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">emit</span><span style="color: #000000">(); </span><span style="color: #008000">// will call handler42</span>
 
-<span class="hljs-comment">// Remember multiple connections and disconnect them all at once:</span>
-<span class="hljs-keyword">let</span> connections = <span class="hljs-keyword">new</span> SignalConnections();
-connections.add(mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>{}));
-connections.add(mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>{}));
-connections.add(mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>{}));
-connections.disconnectAll();
+<span style="color: #008000">// Remember multiple connections and disconnect them all at once:</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">connections</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">SignalConnections</span><span style="color: #000000">();</span>
+<span style="color: #001080">connections</span><span style="color: #000000">.</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">connect</span><span style="color: #000000">(()</span><span style="color: #0000FF">=&gt;</span><span style="color: #000000">{}));</span>
+<span style="color: #001080">connections</span><span style="color: #000000">.</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">connect</span><span style="color: #000000">(()</span><span style="color: #0000FF">=&gt;</span><span style="color: #000000">{}));</span>
+<span style="color: #001080">connections</span><span style="color: #000000">.</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">connect</span><span style="color: #000000">(()</span><span style="color: #0000FF">=&gt;</span><span style="color: #000000">{}));</span>
+<span style="color: #001080">connections</span><span style="color: #000000">.</span><span style="color: #795E26">disconnectAll</span><span style="color: #000000">();</span>
 
-<span class="hljs-comment">// Or disconnect all handlers of a signal:</span>
-mySignal.disconnectAll();</code></pre>
+<span style="color: #008000">// Or disconnect all handlers of a signal:</span>
+<span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">disconnectAll</span><span style="color: #000000">();</span>
+</code></pre>
 				<a href="#execution-order" id="execution-order" style="color: inherit; text-decoration: none;">
 					<h3>Execution order</h3>
 				</a>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Signal } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-signals"</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Signal</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;typed-signals&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">let</span> mySignal = <span class="hljs-keyword">new</span> Signal&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">void</span>&gt;();
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">mySignal</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Signal</span><span style="color: #000000">&lt;() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">void</span><span style="color: #000000">&gt;();</span>
 
-<span class="hljs-comment">// Handlers are called in the order in which they are added:</span>
-mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'first'</span>));
-mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'second'</span>));
-mySignal.disconnectAll();
+<span style="color: #008000">// Handlers are called in the order in which they are added:</span>
+<span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">connect</span><span style="color: #000000">(()</span><span style="color: #0000FF">=&gt;</span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;first&#039;</span><span style="color: #000000">));</span>
+<span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">connect</span><span style="color: #000000">(()</span><span style="color: #0000FF">=&gt;</span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;second&#039;</span><span style="color: #000000">));</span>
+<span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">disconnectAll</span><span style="color: #000000">();</span>
 
-<span class="hljs-comment">// Second parameter to connect is an order value. A higher order value means later execution:</span>
-mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'second'</span>), <span class="hljs-number">1</span>);
-mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'first'</span>), <span class="hljs-number">0</span>);</code></pre>
+<span style="color: #008000">// Second parameter to connect is an order value. A higher order value means later execution:</span>
+<span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">connect</span><span style="color: #000000">(()</span><span style="color: #0000FF">=&gt;</span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;second&#039;</span><span style="color: #000000">), </span><span style="color: #098658">1</span><span style="color: #000000">);</span>
+<span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">connect</span><span style="color: #000000">(()</span><span style="color: #0000FF">=&gt;</span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;first&#039;</span><span style="color: #000000">), </span><span style="color: #098658">0</span><span style="color: #000000">);</span>
+</code></pre>
 				<a href="#collectors" id="collectors" style="color: inherit; text-decoration: none;">
 					<h3>Collectors</h3>
 				</a>
@@ -183,14 +186,15 @@ mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>
 					</li>
 				</ul>
 				<p><code>THandler</code> must be the same function signature as the signal. Here is an example:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Signal, CollectorLast } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-signals"</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Signal</span><span style="color: #000000">, </span><span style="color: #001080">CollectorLast</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;typed-signals&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">let</span> mySignal = <span class="hljs-keyword">new</span> Signal&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">string</span>&gt;();
-<span class="hljs-keyword">let</span> collector = <span class="hljs-keyword">new</span> CollectorLast&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">string</span>&gt;(mySignal);
-mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span> <span class="hljs-string">'Hello World'</span>);
-mySignal.connect(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span> <span class="hljs-string">'Foo Bar'</span>);
-collector.emit(); <span class="hljs-comment">// calls signal.emit();</span>
-<span class="hljs-built_in">console</span>.log(collector.getResult()); <span class="hljs-comment">// 'Foo Bar'</span></code></pre>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">mySignal</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Signal</span><span style="color: #000000">&lt;() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">string</span><span style="color: #000000">&gt;();</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">collector</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">CollectorLast</span><span style="color: #000000">&lt;() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">string</span><span style="color: #000000">&gt;(</span><span style="color: #001080">mySignal</span><span style="color: #000000">);</span>
+<span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">connect</span><span style="color: #000000">(()</span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Hello World&#039;</span><span style="color: #000000">);</span>
+<span style="color: #001080">mySignal</span><span style="color: #000000">.</span><span style="color: #795E26">connect</span><span style="color: #000000">(()</span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Foo Bar&#039;</span><span style="color: #000000">);</span>
+<span style="color: #001080">collector</span><span style="color: #000000">.</span><span style="color: #795E26">emit</span><span style="color: #000000">(); </span><span style="color: #008000">// calls signal.emit();</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">collector</span><span style="color: #000000">.</span><span style="color: #795E26">getResult</span><span style="color: #000000">()); </span><span style="color: #008000">// &#039;Foo Bar&#039;</span>
+</code></pre>
 				<a href="#report-isssues" id="report-isssues" style="color: inherit; text-decoration: none;">
 					<h3>Report isssues</h3>
 				</a>
@@ -209,41 +213,41 @@ collector.emit(); <span class="hljs-comment">// calls signal.emit();</span>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_collector_.html">&quot;<wbr>Collector&quot;</a>
+						<a href="modules/collector.html">Collector</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_collectorarray_.html">&quot;<wbr>Collector<wbr>Array&quot;</a>
+						<a href="modules/collectorarray.html">Collector<wbr>Array</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_collectorlast_.html">&quot;<wbr>Collector<wbr>Last&quot;</a>
+						<a href="modules/collectorlast.html">Collector<wbr>Last</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_collectoruntil0_.html">&quot;<wbr>Collector<wbr>Until0&quot;</a>
+						<a href="modules/collectoruntil0.html">Collector<wbr>Until0</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_collectorwhile0_.html">&quot;<wbr>Collector<wbr>While0&quot;</a>
+						<a href="modules/collectorwhile0.html">Collector<wbr>While0</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_signal_.html">&quot;<wbr>Signal&quot;</a>
+						<a href="modules/signal.html">Signal</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_signalconnection_.html">&quot;<wbr>Signal<wbr>Connection&quot;</a>
+						<a href="modules/signalconnection.html">Signal<wbr>Connection</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_signalconnections_.html">&quot;<wbr>Signal<wbr>Connections&quot;</a>
+						<a href="modules/signalconnections.html">Signal<wbr>Connections</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_signallink_.html">&quot;<wbr>Signal<wbr>Link&quot;</a>
+						<a href="modules/signallink.html">Signal<wbr>Link</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_index_.html">&quot;index&quot;</a>
+						<a href="modules/index.html">index</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_testutils_.html">&quot;test<wbr>Utils&quot;</a>
+						<a href="modules/testutils.html">test<wbr>Utils</a>
 					</li>
 				</ul>
 			</nav>
@@ -273,6 +277,5 @@ collector.emit(); <span class="hljs-comment">// calls signal.emit();</span>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
