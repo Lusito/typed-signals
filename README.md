@@ -5,10 +5,8 @@
 [![License](https://badgen.net/github/license/lusito/typed-signals)](https://github.com/lusito/typed-signals/blob/master/LICENSE)
 [![Stars](https://badgen.net/github/stars/lusito/typed-signals)](https://github.com/lusito/typed-signals)
 [![Watchers](https://badgen.net/github/watchers/lusito/typed-signals)](https://github.com/lusito/typed-signals)
-
-|Master|[![Build Status](https://travis-ci.org/Lusito/typed-signals.svg?branch=master)](https://travis-ci.org/Lusito/typed-signals)|[![Code Coverage](https://coveralls.io/repos/github/Lusito/typed-signals/badge.svg?branch=master)](https://coveralls.io/github/Lusito/typed-signals)|
-|---|---|---|
-|Develop|[![Build Status](https://travis-ci.org/Lusito/typed-signals.svg?branch=develop)](https://travis-ci.org/Lusito/typed-signals)|[![Code Coverage](https://coveralls.io/repos/github/Lusito/typed-signals/badge.svg?branch=develop)](https://coveralls.io/github/Lusito/typed-signals)|
+[![Build Status](https://travis-ci.org/Lusito/typed-signals.svg?branch=master)](https://travis-ci.org/Lusito/typed-signals)
+[![Code Coverage](https://coveralls.io/repos/github/Lusito/typed-signals/badge.svg?branch=master)](https://coveralls.io/github/Lusito/typed-signals)|
 
 A type-checked [signal](https://en.wikipedia.org/wiki/Signals_and_slots) library written in TypeScript, usable from plain JavaScript as well. This is a TypeScript port of this excellent C++11 version:
 [Performance of a C++11 Signal System](https://testbit.eu/cpp11-signal-system-performance/).
@@ -123,7 +121,7 @@ collector.emit(); // calls signal.emit();
 console.log(collector.getResult()); // 'Foo Bar'
 ```
 
-### Report isssues
+### Report issues
 
 Something not working quite as expected? Do you need a feature that has not been implemented yet? Check the [issue tracker](https://github.com/Lusito/typed-signals/issues) and add a new one if your problem is not already listed. Please try to provide a detailed description of your problem, including the steps to reproduce it.
 
