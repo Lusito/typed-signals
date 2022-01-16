@@ -23,4 +23,18 @@ export class SignalConnections {
         }
         this.list = [];
     }
+
+    /**
+     * @returns The number of connections in this list.
+     */
+    public getCount() {
+        return this.list.length;
+    }
+
+    /**
+     * @returns true if this list is empty.
+     */
+    public isEmpty() {
+        return this.list.length === 0;
+    }
 }

@@ -14,6 +14,22 @@ export class Signal<THandler extends (...args: any[]) => any> {
 
     private emitDepth = 0;
 
+    private connectionsCount = 0;
+
+    /**
+     * @returns The number of connections on this signal.
+     */
+    public getConnectionsCount() {
+        return this.connectionsCount;
+    }
+
+    /**
+     * @returns true if this signal has connections.
+     */
+    public hasConnections() {
+        return this.connectionsCount > 0;
+    }
+
     /**
      * Subscribe to this signal.
      *
@@ -21,6 +37,7 @@ export class Signal<THandler extends (...args: any[]) => any> {
      * @param order Handlers with a higher order value will be called later.
      */
     public connect(callback: THandler, order = 0): SignalConnection {
+        this.connectionsCount++;
         const link = this.head.insert(callback, order);
         if (this.emitDepth > 0) {
             this.hasNewLinks = true;
@@ -38,6 +55,7 @@ export class Signal<THandler extends (...args: any[]) => any> {
     public disconnect(callback: THandler) {
         for (let link = this.head.next; link !== this.head; link = link.next) {
             if (link.callback === callback) {
+                this.connectionsCount--;
                 link.unlink();
                 return true;
             }
@@ -52,6 +70,7 @@ export class Signal<THandler extends (...args: any[]) => any> {
         while (this.head.next !== this.head) {
             this.head.next.unlink();
         }
+        this.connectionsCount = 0;
     }
 
     /**

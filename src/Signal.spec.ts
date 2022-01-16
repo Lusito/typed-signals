@@ -310,4 +310,47 @@ describe("Signal", () => {
             expect(d.testCallback).toHaveBeenCalledWith(d.priority);
         });
     });
+
+    it("should show connections count properly", () => {
+        const signal = new Signal<(d: Dummy) => void>();
+        const numListeners = 10;
+        const listeners: ListenerMock[] = [];
+
+        expect(signal.getConnectionsCount()).toBe(0);
+        expect(signal.hasConnections()).toBe(false);
+        for (let i = 0; i < numListeners; i++) {
+            const listener = new ListenerMock();
+            listeners.push(listener);
+            signal.connect(listener.callback);
+            expect(signal.getConnectionsCount()).toBe(i + 1);
+        }
+        expect(signal.getConnectionsCount()).toBe(numListeners);
+        expect(signal.hasConnections()).toBe(true);
+
+        for (let i = numListeners - 1; i >= 0; i--) {
+            signal.disconnect(listeners[i].callback);
+            expect(signal.getConnectionsCount()).toBe(i);
+        }
+        expect(signal.hasConnections()).toBe(false);
+    });
+
+    it("should show connections count properly after disconnectAll", () => {
+        const signal = new Signal<(d: Dummy) => void>();
+        const numListeners = 10;
+        const listeners: ListenerMock[] = [];
+
+        expect(signal.getConnectionsCount()).toBe(0);
+        expect(signal.hasConnections()).toBe(false);
+        for (let i = 0; i < numListeners; i++) {
+            const listener = new ListenerMock();
+            listeners.push(listener);
+            signal.connect(listener.callback);
+        }
+        expect(signal.getConnectionsCount()).toBe(numListeners);
+        expect(signal.hasConnections()).toBe(true);
+
+        signal.disconnectAll();
+        expect(signal.getConnectionsCount()).toBe(0);
+        expect(signal.hasConnections()).toBe(false);
+    });
 });
