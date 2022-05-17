@@ -23,19 +23,24 @@ export interface SignalConnection {
  */
 export class SignalConnectionImpl<THandler extends (...args: any[]) => any> implements SignalConnection {
     private link: SignalLink<THandler> | null;
+    private parentCleanup: {() : void} | null;
 
     /**
-     * @param head The head link of the signal.
      * @param link The actual link of the connection.
+     * @param parentCleanup Callback to cleanup the parent signal when a connection is disconnected
      */
-    public constructor(link: SignalLink<THandler>) {
+    public constructor(link: SignalLink<THandler>, parentCleanup: () => void) {
         this.link = link;
+        this.parentCleanup = parentCleanup;
     }
 
     public disconnect(): boolean {
         if (this.link !== null) {
             this.link.unlink();
             this.link = null;
+
+            this.parentCleanup!();
+            this.parentCleanup = null;
             return true;
         }
 

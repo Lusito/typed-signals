@@ -43,7 +43,11 @@ export class Signal<THandler extends (...args: any[]) => any> {
             this.hasNewLinks = true;
             link.newLink = true;
         }
-        return new SignalConnectionImpl(link);
+        return new SignalConnectionImpl(link, () => this.decrementConnectionCount());
+    }
+
+    private decrementConnectionCount() {
+        this.connectionsCount--;
     }
 
     /**
@@ -55,7 +59,7 @@ export class Signal<THandler extends (...args: any[]) => any> {
     public disconnect(callback: THandler) {
         for (let link = this.head.next; link !== this.head; link = link.next) {
             if (link.callback === callback) {
-                this.connectionsCount--;
+                this.decrementConnectionCount();
                 link.unlink();
                 return true;
             }
