@@ -1,5 +1,5 @@
-import {Signal} from "./Signal";
-import {Dummy, ListenerMock} from "./testUtils";
+import { Signal } from "./Signal";
+import { Dummy, ListenerMock } from "./testUtils";
 
 describe("SignalConnection", () => {
     describe("when disconnecting", () => {

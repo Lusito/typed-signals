@@ -23,7 +23,8 @@ export interface SignalConnection {
  */
 export class SignalConnectionImpl<THandler extends (...args: any[]) => any> implements SignalConnection {
     private link: SignalLink<THandler> | null;
-    private parentCleanup: {() : void} | null;
+
+    private parentCleanup: { (): void } | null;
 
     /**
      * @param link The actual link of the connection.
@@ -39,6 +40,7 @@ export class SignalConnectionImpl<THandler extends (...args: any[]) => any> impl
             this.link.unlink();
             this.link = null;
 
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             this.parentCleanup!();
             this.parentCleanup = null;
             return true;
