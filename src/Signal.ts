@@ -3,7 +3,7 @@ import { SignalConnection, SignalConnectionImpl } from "./SignalConnection";
 import { SignalLink } from "./SignalLink";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-const headOptions = { order: 0, onUnlink() {} } as const;
+const headOptions = { order: 0, isPublic: true, onUnlink() {} } as const;
 
 /**
  * A signal is a way to publish and subscribe to events.
@@ -38,10 +38,11 @@ export class Signal<THandler extends (...args: any[]) => any> {
      *
      * @param callback This callback will be run when emit() is called.
      * @param order Handlers with a higher order value will be called later.
+     * @param isPublic Handlers with isPublic=false will not be removed when signal.disconnectAll is called. Disconnect manually or via SignalConnections
      */
-    public connect(callback: THandler, order = 0): SignalConnection {
+    public connect(callback: THandler, order = 0, isPublic = true): SignalConnection {
         this.connectionsCount++;
-        const link = this.head.insert({ callback, order, onUnlink: this.onUnlink });
+        const link = this.head.insert({ callback, order, isPublic, onUnlink: this.onUnlink });
         if (this.emitDepth > 0) {
             this.hasNewLinks = true;
             link.newLink = true;
@@ -73,8 +74,12 @@ export class Signal<THandler extends (...args: any[]) => any> {
      * Disconnect all handlers from this signal event.
      */
     public disconnectAll() {
-        while (this.head.next !== this.head) {
-            this.head.next.unlink();
+        let { next } = this.head;
+        while (next !== this.head) {
+            if (next.isPublic) {
+                next.unlink();
+            }
+            next = next.next;
         }
     }
 

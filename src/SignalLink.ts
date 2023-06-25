@@ -1,5 +1,6 @@
 type SignalLinkOptions<THandler extends (...args: any[]) => any> = {
     order: number;
+    isPublic: boolean;
     onUnlink(): void;
     callback?: THandler;
 };
@@ -21,6 +22,8 @@ export class SignalLink<THandler extends (...args: any[]) => any> {
 
     public callback?: THandler;
 
+    public readonly isPublic: boolean;
+
     private onUnlink: () => void;
 
     public constructor(
@@ -31,6 +34,7 @@ export class SignalLink<THandler extends (...args: any[]) => any> {
         this.prev = prev ?? this;
         this.next = next ?? this;
         this.order = options.order;
+        this.isPublic = options.isPublic;
         this.callback = options.callback;
         this.onUnlink = options.onUnlink;
     }
