@@ -2,13 +2,16 @@ import { Collector } from "./Collector";
 import { SignalConnection, SignalConnectionImpl } from "./SignalConnection";
 import { SignalLink } from "./SignalLink";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const headOptions = { order: 0, isPublic: true, onUnlink() {} } as const;
+
 /**
  * A signal is a way to publish and subscribe to events.
  *
  * @typeparam THandler The function signature to be implemented by handlers.
  */
 export class Signal<THandler extends (...args: any[]) => any> {
-    private readonly head = new SignalLink<THandler>();
+    private readonly head = new SignalLink<THandler>(null, null, headOptions);
 
     private hasNewLinks = false;
 
@@ -35,20 +38,21 @@ export class Signal<THandler extends (...args: any[]) => any> {
      *
      * @param callback This callback will be run when emit() is called.
      * @param order Handlers with a higher order value will be called later.
+     * @param isPublic Handlers with isPublic=false will not be removed when signal.disconnectAll is called. Disconnect manually or via SignalConnections
      */
-    public connect(callback: THandler, order = 0): SignalConnection {
+    public connect(callback: THandler, order = 0, isPublic = true): SignalConnection {
         this.connectionsCount++;
-        const link = this.head.insert(callback, order);
+        const link = this.head.insert({ callback, order, isPublic, onUnlink: this.onUnlink });
         if (this.emitDepth > 0) {
             this.hasNewLinks = true;
             link.newLink = true;
         }
-        return new SignalConnectionImpl(link, () => this.decrementConnectionCount());
+        return new SignalConnectionImpl(link);
     }
 
-    private decrementConnectionCount() {
+    private onUnlink = () => {
         this.connectionsCount--;
-    }
+    };
 
     /**
      * Unsubscribe from this signal with the original callback instance.
@@ -59,7 +63,6 @@ export class Signal<THandler extends (...args: any[]) => any> {
     public disconnect(callback: THandler) {
         for (let link = this.head.next; link !== this.head; link = link.next) {
             if (link.callback === callback) {
-                this.decrementConnectionCount();
                 link.unlink();
                 return true;
             }
@@ -71,10 +74,13 @@ export class Signal<THandler extends (...args: any[]) => any> {
      * Disconnect all handlers from this signal event.
      */
     public disconnectAll() {
-        while (this.head.next !== this.head) {
-            this.head.next.unlink();
+        let { next } = this.head;
+        while (next !== this.head) {
+            if (next.isPublic) {
+                next.unlink();
+            }
+            next = next.next;
         }
-        this.connectionsCount = 0;
     }
 
     /**

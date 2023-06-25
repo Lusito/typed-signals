@@ -22,39 +22,24 @@ export interface SignalConnection {
  * @private
  */
 export class SignalConnectionImpl<THandler extends (...args: any[]) => any> implements SignalConnection {
-    private link: SignalLink<THandler> | null;
-
-    private parentCleanup: { (): void } | null;
+    private link: SignalLink<THandler>;
 
     /**
      * @param link The actual link of the connection.
-     * @param parentCleanup Callback to cleanup the parent signal when a connection is disconnected
      */
-    public constructor(link: SignalLink<THandler>, parentCleanup: () => void) {
+    public constructor(link: SignalLink<THandler>) {
         this.link = link;
-        this.parentCleanup = parentCleanup;
     }
 
     public disconnect(): boolean {
-        if (this.link !== null) {
-            this.link.unlink();
-            this.link = null;
-
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            this.parentCleanup!();
-            this.parentCleanup = null;
-            return true;
-        }
-
-        return false;
+        return this.link.unlink();
     }
 
     public set enabled(enable: boolean) {
-        if (this.link) this.link.setEnabled(enable);
+        this.link.setEnabled(enable);
     }
 
     public get enabled(): boolean {
-        // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-        return this.link !== null && this.link.isEnabled();
+        return this.link.isEnabled();
     }
 }
