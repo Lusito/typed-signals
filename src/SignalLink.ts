@@ -1,3 +1,9 @@
+type SignalLinkOptions<THandler extends (...args: any[]) => any> = {
+    order: number;
+    onUnlink(): void;
+    callback?: THandler;
+};
+
 /**
  * SignalLink implements a doubly-linked ring with nodes containing the signal handlers.
  * @private
@@ -13,12 +19,20 @@ export class SignalLink<THandler extends (...args: any[]) => any> {
 
     public prev: SignalLink<THandler>;
 
-    public callback: THandler | null = null;
+    public callback?: THandler;
 
-    public constructor(prev: SignalLink<THandler> | null = null, next: SignalLink<THandler> | null = null, order = 0) {
+    private onUnlink: () => void;
+
+    public constructor(
+        prev: SignalLink<THandler> | null,
+        next: SignalLink<THandler> | null,
+        options: SignalLinkOptions<THandler>
+    ) {
         this.prev = prev ?? this;
         this.next = next ?? this;
-        this.order = order;
+        this.order = options.order;
+        this.callback = options.callback;
+        this.onUnlink = options.onUnlink;
     }
 
     public isEnabled(): boolean {
@@ -29,21 +43,28 @@ export class SignalLink<THandler extends (...args: any[]) => any> {
         this.enabled = flag;
     }
 
-    public unlink(): void {
-        this.callback = null;
-        this.next.prev = this.prev;
-        this.prev.next = this.next;
+    public unlink(): boolean {
+        if (this.callback) {
+            delete this.callback;
+            this.next.prev = this.prev;
+            this.prev.next = this.next;
+            this.onUnlink();
+
+            return true;
+        }
+
+        return false;
     }
 
-    public insert(callback: THandler, order: number): SignalLink<THandler> {
+    public insert(options: SignalLinkOptions<THandler>): SignalLink<THandler> {
+        const { order } = options;
         let after = this.prev;
         while (after !== this) {
             if (after.order <= order) break;
             after = after.prev;
         }
 
-        const link = new SignalLink(after, after.next, order);
-        link.callback = callback;
+        const link = new SignalLink(after, after.next, options);
         after.next = link;
         link.next.prev = link;
 

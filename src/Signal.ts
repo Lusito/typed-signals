@@ -2,13 +2,16 @@ import { Collector } from "./Collector";
 import { SignalConnection, SignalConnectionImpl } from "./SignalConnection";
 import { SignalLink } from "./SignalLink";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const headOptions = { order: 0, onUnlink() {} } as const;
+
 /**
  * A signal is a way to publish and subscribe to events.
  *
  * @typeparam THandler The function signature to be implemented by handlers.
  */
 export class Signal<THandler extends (...args: any[]) => any> {
-    private readonly head = new SignalLink<THandler>();
+    private readonly head = new SignalLink<THandler>(null, null, headOptions);
 
     private hasNewLinks = false;
 
@@ -38,17 +41,17 @@ export class Signal<THandler extends (...args: any[]) => any> {
      */
     public connect(callback: THandler, order = 0): SignalConnection {
         this.connectionsCount++;
-        const link = this.head.insert(callback, order);
+        const link = this.head.insert({ callback, order, onUnlink: this.onUnlink });
         if (this.emitDepth > 0) {
             this.hasNewLinks = true;
             link.newLink = true;
         }
-        return new SignalConnectionImpl(link, () => this.decrementConnectionCount());
+        return new SignalConnectionImpl(link);
     }
 
-    private decrementConnectionCount() {
+    private onUnlink = () => {
         this.connectionsCount--;
-    }
+    };
 
     /**
      * Unsubscribe from this signal with the original callback instance.
@@ -59,7 +62,6 @@ export class Signal<THandler extends (...args: any[]) => any> {
     public disconnect(callback: THandler) {
         for (let link = this.head.next; link !== this.head; link = link.next) {
             if (link.callback === callback) {
-                this.decrementConnectionCount();
                 link.unlink();
                 return true;
             }
@@ -74,7 +76,6 @@ export class Signal<THandler extends (...args: any[]) => any> {
         while (this.head.next !== this.head) {
             this.head.next.unlink();
         }
-        this.connectionsCount = 0;
     }
 
     /**
