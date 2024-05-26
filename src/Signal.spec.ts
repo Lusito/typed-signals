@@ -198,6 +198,26 @@ describe("Signal", () => {
         expect(count2).toBe(1);
     });
 
+    it("should prevent disconnecting private listeners", () => {
+        const sig = new Signal<() => void>();
+        let count1 = 0;
+        let count2 = 0;
+        const connection1 = sig.connect(() => count1++, { isPublic: false });
+        sig.connect(() => count2++);
+        sig.emit();
+        expect(count1).toBe(1);
+        expect(count2).toBe(1);
+        sig.disconnectAll();
+        sig.emit();
+        expect(count1).toBe(2);
+        expect(count2).toBe(1);
+        // should still allow disconnecting the connection manually
+        connection1.disconnect();
+        sig.emit();
+        expect(count1).toBe(2);
+        expect(count2).toBe(1);
+    });
+
     it("should allow disconnecting one listener", () => {
         const sig = new Signal<() => void>();
         let count1 = 0;
@@ -294,10 +314,10 @@ describe("Signal", () => {
             const d = new ListenerPriorityMock(3);
 
             const signal = new Signal<() => void>();
-            signal.connect(d.callback, 3);
-            signal.connect(a.callback, 0);
-            signal.connect(c.callback, 2);
-            signal.connect(b.callback, 1);
+            signal.connect(d.callback, { order: 3 });
+            signal.connect(a.callback, { order: 0 });
+            signal.connect(c.callback, { order: 2 });
+            signal.connect(b.callback, { order: 1 });
 
             signal.emit();
             expect(a.testCallback).toHaveBeenCalledTimes(1);
