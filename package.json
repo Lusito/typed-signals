@@ -1,6 +1,6 @@
 {
   "name": "typed-signals",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "description": "A type checked signal library for TypeScript (and JavaScript)",
   "keywords": [
     "TypeScript",
