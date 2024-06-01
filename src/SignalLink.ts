@@ -29,7 +29,7 @@ export class SignalLink<THandler extends (...args: any[]) => any> {
     public constructor(
         prev: SignalLink<THandler> | null,
         next: SignalLink<THandler> | null,
-        options: SignalLinkOptions<THandler>
+        options: SignalLinkOptions<THandler>,
     ) {
         this.prev = prev ?? this;
         this.next = next ?? this;

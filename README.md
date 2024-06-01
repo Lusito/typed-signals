@@ -15,6 +15,7 @@ Of course, some changes have been made to make it work with TypeScript.
 The original unit tests and additional ones are running automatically on [Travis-CI](https://travis-ci.org/)
 
 #### Fair Warning
+
 With version 2, the target is now es2015, so if you want to support older browser, you'll have to ensure that this module is being transpiled to an older es version during your build-process.
 
 ### Why Typed-Signals?
@@ -25,13 +26,13 @@ With version 2, the target is now es2015, so if you want to support older browse
 - Add and remove listeners anytime, even during callbacks
 - Signals can have return values, which can be collected
 - No dependencies
-- Automated [unit tests](https://travis-ci.org/Lusito/typed-signals)  with 100% [code coverage](https://coveralls.io/github/Lusito/typed-signals)
+- Automated [unit tests](https://travis-ci.org/Lusito/typed-signals) with 100% [code coverage](https://coveralls.io/github/Lusito/typed-signals)
 - Liberal license: [CC0 Public Domain](http://creativecommons.org/publicdomain/zero/1.0/)
 - [Fully documented](https://lusito.github.io/typed-signals/index.html) using TypeDoc
 
 ### Installation via NPM
 
-```npm install typed-signals --save```
+`npm install typed-signals --save`
 
 ### Simple usage
 
@@ -42,10 +43,10 @@ import { Signal } from "typed-signals";
 let mySignal = new Signal<(n: number, b: boolean, s: string) => void>();
 
 //Register a handler:
-let connection = mySignal.connect((n, b, s)=> console.log(`Called: ${n} ${b} ${s}`));
+let connection = mySignal.connect((n, b, s) => console.log(`Called: ${n} ${b} ${s}`));
 
 // Emit a signal:
-mySignal.emit(42, true, 'Galactic Gargleblaster');
+mySignal.emit(42, true, "Galactic Gargleblaster");
 
 // Disconnect a handler:
 connection.disconnect();
@@ -68,9 +69,9 @@ mySignal.emit(); // will call handler42
 
 // Remember multiple connections and disconnect them all at once:
 let connections = new SignalConnections();
-connections.add(mySignal.connect(()=>{}));
-connections.add(mySignal.connect(()=>{}));
-connections.add(mySignal.connect(()=>{}));
+connections.add(mySignal.connect(() => {}));
+connections.add(mySignal.connect(() => {}));
+connections.add(mySignal.connect(() => {}));
 connections.disconnectAll();
 
 // Or disconnect all handlers of a signal:
@@ -85,13 +86,13 @@ import { Signal } from "typed-signals";
 let mySignal = new Signal<() => void>();
 
 // Handlers are called in the order in which they are added:
-mySignal.connect(()=>console.log('first'));
-mySignal.connect(()=>console.log('second'));
+mySignal.connect(() => console.log("first"));
+mySignal.connect(() => console.log("second"));
 mySignal.disconnectAll();
 
 // Second parameter to connect is an order value. A higher order value means later execution:
-mySignal.connect(()=>console.log('second'), 1);
-mySignal.connect(()=>console.log('first'), 0);
+mySignal.connect(() => console.log("second"), 1);
+mySignal.connect(() => console.log("first"), 0);
 ```
 
 ### Collectors
@@ -99,14 +100,15 @@ mySignal.connect(()=>console.log('first'), 0);
 Collectors can be used to stop processing further handlers depending on the return value of a handler and/or to collect return values of those handlers.
 
 Built-in Collectors:
+
 - `CollectorLast<THandler extends (...args: any[]) => any>`
-    - Returns the result of the last signal handler from a signal emission.
+  - Returns the result of the last signal handler from a signal emission.
 - `CollectorUntil0<THandler extends (...args: any[]) => boolean>`
-    - Keep signal emissions going while all handlers return true.
+  - Keep signal emissions going while all handlers return true.
 - `CollectorWhile0<THandler extends (...args: any[]) => boolean>`
-    - Keep signal emissions going while all handlers return false.
+  - Keep signal emissions going while all handlers return false.
 - `CollectorArray<THandler extends (...args: any[]) => any>`
-    - Returns the result of the all signal handlers from a signal emission in an array.
+  - Returns the result of the all signal handlers from a signal emission in an array.
 
 `THandler` must be the same function signature as the signal. Here is an example:
 
@@ -115,8 +117,8 @@ import { Signal, CollectorLast } from "typed-signals";
 
 let mySignal = new Signal<() => string>();
 let collector = new CollectorLast<() => string>(mySignal);
-mySignal.connect(()=> 'Hello World');
-mySignal.connect(()=> 'Foo Bar');
+mySignal.connect(() => "Hello World");
+mySignal.connect(() => "Foo Bar");
 collector.emit(); // calls signal.emit();
 console.log(collector.getResult()); // 'Foo Bar'
 ```
