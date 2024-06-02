@@ -1,15 +1,8 @@
 {
+  "extends": "@lusito/tsconfig/base",
   "compilerOptions": {
-    "target": "ES2015",
     "module": "CommonJS",
-    "declaration": true,
-    "lib": ["es2015"],
-    "outDir": "./dist",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node"
+    "outDir": "./dist"
   },
   "exclude": ["dist"]
 }

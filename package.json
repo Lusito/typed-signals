@@ -37,6 +37,7 @@
     "@lusito/eslint-config": "^3.1.0",
     "@lusito/mono": "^0.14.2",
     "@lusito/prettier-config": "^3.1.0",
+    "@lusito/tsconfig": "^1.0.2",
     "@types/jest": "^29.5.12",
     "copyfiles": "^2.4.1",
     "coveralls": "^3.1.1",
